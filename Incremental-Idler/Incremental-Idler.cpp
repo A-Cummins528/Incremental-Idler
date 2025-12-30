@@ -1,23 +1,51 @@
-// Incremental-Idler.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Coin.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
 
+    // Setup Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler Project");
-
     window.setFramerateLimit(60);
 
-    // To Do: Load Font
 
-    // Create a "Coin"
-    sf::CircleShape coin(100.f); // Radius 100
-    coin.setFillColor(sf::Color::Yellow);
-    coin.setPosition(300.f, 200.f);
+    // --- Load Assets ---
+
+    // Font
+    sf::Font font;
+    if (!font.loadFromFile("arial.ttf"))
+    {
+        std::cout << "Error loading font!" << std::endl;
+        return -1;
+    }
+
+
+    // --- Object Creation ---
+
+    // Coin
+    Coin myCoin(400.f, 300.f); // Create a coin at center screen
+
+    // Title Text
+    sf::Text titleText;
+    titleText.setFont(font);
+    titleText.setString("Coin Clicker");
+    titleText.setCharacterSize(36);
+    titleText.setFillColor(sf::Color::Black);
+
+    sf::FloatRect textRect = titleText.getLocalBounds(); // Centre Text
+    titleText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    titleText.setPosition(400.f, 50.f); // Middle X, Top Y
+
+    // Score Text
+    int score = 0;
+    sf::Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setString("Coins: 0");
+    scoreText.setCharacterSize(24);
+    scoreText.setFillColor(sf::Color::Yellow);
+    scoreText.setPosition(10.f, 10.f); // Top Left corner
 
     // Game Loop
     while (window.isOpen())
@@ -28,47 +56,38 @@ int main()
                 if (event.type == sf::Event::Closed)
                     window.close();
 
-                // Detect Click
+                // Mouse Pressed
                 if (event.type == sf::Event::MouseButtonPressed)
                 {
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
-                        //Check is mouse is inside the circle
                         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-                        if (coin.getGlobalBounds().contains(mousePos))
+
+                        // Ask the Coin object: "Were you clicked?"
+                        if (myCoin.isClicked(mousePos))
                         {
+                            score++;
+                            scoreText.setString("Coins: " + std::to_string(score));
+                            myCoin.shrink(); // Ask coin to shrink
                             std::cout << "Coin Clicked!" << std::endl;
-
-                            // Visual feedback: Change colour briefly
-                            coin.setFillColor(sf::Color::Red);
                         }
-
                     }
                 }
 
-                // Release click
+                // Mouse Released
                 if (event.type == sf::Event::MouseButtonReleased)
                 {
-                    coin.setFillColor(sf::Color::Yellow);
+                    myCoin.resetScale();
                 }
             }
 
-        // Clear > Draw > Display
-        window.clear(sf::Color::White); // Clear old frame
-        window.draw(coin); // Draw new frame
-        window.display(); // Show new frame
+        // Render
+        window.clear(sf::Color::White);
+        myCoin.draw(window);
+        window.draw(titleText);
+        window.draw(scoreText);
+        window.display();
     }
 
-return 0;
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
