@@ -7,3 +7,4 @@ Release/
 *.dll
 *.pdb
 *.obj
+assets/data/

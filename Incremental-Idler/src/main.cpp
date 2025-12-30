@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Coin.h"
+#include "SaveSystem.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
 
     // Setup Window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler Project");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler");
     window.setFramerateLimit(60);
 
 
@@ -15,7 +16,7 @@ int main()
 
     // Font
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("assets/fonts/arial.ttf"))
     {
         std::cout << "Error loading font!" << std::endl;
         return -1;
@@ -25,7 +26,12 @@ int main()
     // --- Object Creation ---
 
     // Coin
-    Coin myCoin(400.f, 300.f); // Create a coin at center screen
+    Coin myCoin(400.f, 300.f);
+
+
+    // -- Load Game ---
+    
+    long long score = loadGame();
 
     // Title Text
     sf::Text titleText;
@@ -39,22 +45,25 @@ int main()
     titleText.setPosition(400.f, 50.f); // Middle X, Top Y
 
     // Score Text
-    int score = 0;
+    // int score = 0;
     sf::Text scoreText;
     scoreText.setFont(font);
-    scoreText.setString("Coins: 0");
+    scoreText.setString("Coins: " + std::to_string(score));
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::Yellow);
     scoreText.setPosition(10.f, 10.f); // Top Left corner
 
-    // Game Loop
+    // --- Game Loop ---
     while (window.isOpen())
     {
         sf::Event event;
             while (window.pollEvent(event))
         {
                 if (event.type == sf::Event::Closed)
+                {
+                    saveGame(score);
                     window.close();
+                }
 
                 // Mouse Pressed
                 if (event.type == sf::Event::MouseButtonPressed)
@@ -63,13 +72,11 @@ int main()
                     {
                         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-                        // Ask the Coin object: "Were you clicked?"
                         if (myCoin.isClicked(mousePos))
                         {
                             score++;
                             scoreText.setString("Coins: " + std::to_string(score));
-                            myCoin.shrink(); // Ask coin to shrink
-                            std::cout << "Coin Clicked!" << std::endl;
+                            myCoin.shrink();
                         }
                     }
                 }

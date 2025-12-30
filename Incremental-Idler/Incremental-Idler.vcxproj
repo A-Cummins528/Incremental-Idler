@@ -18,6 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Coin.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\SaveSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Coin.h" />
+    <ClInclude Include="src\SaveSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\arialbd.ttf" />
+    <Font Include="assets\fonts\arialbi.ttf" />
+    <Font Include="assets\fonts\ariali.ttf" />
+    <Font Include="assets\fonts\ARIALN.TTF" />
+    <Font Include="assets\fonts\ARIALNB.TTF" />
+    <Font Include="assets\fonts\ARIALNBI.TTF" />
+    <Font Include="assets\fonts\ARIALNI.TTF" />
+    <Font Include="assets\fonts\ariblk.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\coin.png" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -132,13 +155,6 @@ sfml-window.lib;
 sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="Incremental-Idler.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Coin.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

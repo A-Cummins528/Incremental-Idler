@@ -3,7 +3,7 @@
 Coin::Coin(float x, float y)
 {
 	// Load Texture
-	if (!texture.loadFromFile("coin.png"))
+	if (!texture.loadFromFile("assets/images/coin.png"))
 	{
 	std::cout << "Error loading coin.png" << std::endl;
 	}

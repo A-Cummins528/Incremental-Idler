@@ -13,18 +13,73 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{22444a5b-d312-494a-b57f-29145cdb43c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{2c5f4ec3-7f52-4807-982e-f75b943afed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\data">
+      <UniqueIdentifier>{622ba7fe-0048-4a5c-ae2c-cbf8211b0b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\fonts">
+      <UniqueIdentifier>{af29a451-c79b-4eb9-abaa-c1cb802ff334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\images">
+      <UniqueIdentifier>{c16f805b-cae6-4ff8-a210-d64575846b43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Incremental-Idler.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Coin.cpp">
+      <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SaveSystem.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Coin.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Coin.h">
+      <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\SaveSystem.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\arial.ttf">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\arialbd.ttf">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\arialbi.ttf">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\ariali.ttf">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\ARIALN.TTF">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\ARIALNB.TTF">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\ARIALNBI.TTF">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\ARIALNI.TTF">
+      <Filter>assets\fonts</Filter>
+    </Font>
+    <Font Include="assets\fonts\ariblk.ttf">
+      <Filter>assets\fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\coin.png">
+      <Filter>assets\images</Filter>
+    </Image>
   </ItemGroup>
 </Project>
