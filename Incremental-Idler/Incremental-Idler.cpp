@@ -1,11 +1,65 @@
 // Incremental-Idler.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
 int main()
 {
     std::cout << "Hello World!\n";
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler Project");
+
+    window.setFramerateLimit(60);
+
+    // To Do: Load Font
+
+    // Create a "Coin"
+    sf::CircleShape coin(100.f); // Radius 100
+    coin.setFillColor(sf::Color::Yellow);
+    coin.setPosition(300.f, 200.f);
+
+    // Game Loop
+    while (window.isOpen())
+    {
+        sf::Event event;
+            while (window.pollEvent(event))
+        {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+
+                // Detect Click
+                if (event.type == sf::Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+                        //Check is mouse is inside the circle
+                        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                        if (coin.getGlobalBounds().contains(mousePos))
+                        {
+                            std::cout << "Coin Clicked!" << std::endl;
+
+                            // Visual feedback: Change colour briefly
+                            coin.setFillColor(sf::Color::Red);
+                        }
+
+                    }
+                }
+
+                // Release click
+                if (event.type == sf::Event::MouseButtonReleased)
+                {
+                    coin.setFillColor(sf::Color::Yellow);
+                }
+            }
+
+        // Clear > Draw > Display
+        window.clear(sf::Color::White); // Clear old frame
+        window.draw(coin); // Draw new frame
+        window.display(); // Show new frame
+    }
+
+return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
