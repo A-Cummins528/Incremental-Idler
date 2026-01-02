@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Coin.h"
+#include "Cafe.h"
 #include "SaveSystem.h"
 
 int main()
@@ -28,6 +29,9 @@ int main()
     // Coin
     Coin myCoin(400.f, 300.f);
 
+    // Cafe
+    Cafe myCafe(100.f, 500.f);
+
 
     // -- Load Game ---
     
@@ -50,7 +54,7 @@ int main()
     scoreText.setFont(font);
     scoreText.setString("Coins: " + std::to_string(score));
     scoreText.setCharacterSize(24);
-    scoreText.setFillColor(sf::Color::Yellow);
+    scoreText.setFillColor(sf::Color::Black);
     scoreText.setPosition(10.f, 10.f); // Top Left corner
 
     // --- Game Loop ---
@@ -78,6 +82,13 @@ int main()
                             scoreText.setString("Coins: " + std::to_string(score));
                             myCoin.shrink();
                         }
+
+                        if (myCafe.isClicked(mousePos))
+                        {
+                            score = score + 100;
+                            scoreText.setString("Coins: " + std::to_string(score));
+                            myCafe.shrink();
+                        }
                     }
                 }
 
@@ -85,12 +96,14 @@ int main()
                 if (event.type == sf::Event::MouseButtonReleased)
                 {
                     myCoin.resetScale();
+					myCafe.resetScale();
                 }
             }
 
         // Render
         window.clear(sf::Color::White);
         myCoin.draw(window);
+		myCafe.draw(window);
         window.draw(titleText);
         window.draw(scoreText);
         window.display();

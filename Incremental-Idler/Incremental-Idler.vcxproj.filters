@@ -39,13 +39,19 @@
     <ClCompile Include="src\SaveSystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Cafe.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Coin.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\SaveSystem.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Coin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cafe.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\coin.png">
+      <Filter>assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\cafe.png">
       <Filter>assets\images</Filter>
     </Image>
   </ItemGroup>
