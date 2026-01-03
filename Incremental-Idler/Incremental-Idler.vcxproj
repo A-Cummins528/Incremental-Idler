@@ -44,6 +44,9 @@
     <Image Include="assets\images\cafe.png" />
     <Image Include="assets\images\coin.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="ToDo.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

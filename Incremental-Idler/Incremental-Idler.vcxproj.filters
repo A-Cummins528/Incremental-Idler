@@ -91,4 +91,7 @@
       <Filter>assets\images</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="ToDo.txt" />
+  </ItemGroup>
 </Project>
