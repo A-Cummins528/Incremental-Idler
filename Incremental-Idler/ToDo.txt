@@ -1,4 +1,5 @@
 Add Shop button
-Move on click methods into class objects
+Add additional objects
 extend object class to coin and cafe subclasses
-catch custom exceptions for missing assets
+Move on click methods into class objects
+Expand Cafe options (add manager, upgrades, etc)
