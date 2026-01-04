@@ -27,12 +27,21 @@ int main()
     // --- Object Creation ---
 
     Coin myCoin(400.f, 300.f, coinTexture);
-    Cafe myCafe(150.f, 500.f, cafeTexture);
+    Cafe myCafe(110.f, 490.f, cafeTexture);
 
 
     // -- Load Game ---
     
-    long long score = loadGame();
+    // 1. Create variables to hold the loaded data
+    long long score = 0;
+    int loadedCafeCount = 0;
+
+    // 2. Pass them into the loader
+    loadGame(score, loadedCafeCount);
+
+    // 3. Update the Cafe object with the loaded count
+	myCafe.setOwnedCount(loadedCafeCount);
+
 
     // Title Text
     sf::Text titleText;
@@ -84,7 +93,7 @@ int main()
             {
                 if (event.type == sf::Event::Closed)
                 {
-                    saveGame(score); // To do: save cafe owned count
+                    saveGame(score, myCafe.getOwnedCount()); 
                     window.close();
                 }
 

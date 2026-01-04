@@ -54,3 +54,8 @@ int Cafe::getIncomePerSecond()
 {
 	return ownedCount * baseIncome;
 }
+
+void Cafe::setOwnedCount(int count)
+{
+	ownedCount = count;
+}
