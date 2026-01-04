@@ -7,7 +7,7 @@ class Cafe
 public:
 
 	// Constructor: Set up the Cafe
-	Cafe(float x, float y);
+	Cafe(float x, float y, const sf::Texture& texture);
 
 	// Method to draw the Cafe to the window
 	void draw(sf::RenderWindow& window);
@@ -20,6 +20,5 @@ public:
 	void resetScale();
 
 private:
-	sf::Texture texture;
 	sf::Sprite sprite;
 };

@@ -4,10 +4,9 @@
 #include "Cafe.h"
 #include "SaveSystem.h"
 
+
 int main()
 {
-    std::cout << "Hello World!\n";
-
     // Setup Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler");
     window.setFramerateLimit(60);
@@ -15,7 +14,6 @@ int main()
 
     // --- Load Assets ---
 
-    // Font
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/arial.ttf"))
     {
@@ -23,14 +21,26 @@ int main()
         return -1;
     }
 
+	sf::Texture coinTexture;
+    if (!coinTexture.loadFromFile("assets/images/coin.png"))
+    {
+        std::cerr << "Failed to load coin.png" << std::endl;
+		return -1;
+    }
 
+    sf::Texture cafeTexture;
+    if (!cafeTexture.loadFromFile("assets/images/cafe.png"))
+    {
+        std::cerr << "Failed to load cafe.png" << std::endl;
+        return -1;
+    }
     // --- Object Creation ---
 
     // Coin
-    Coin myCoin(400.f, 300.f);
+    Coin myCoin(400.f, 300.f, coinTexture);
 
     // Cafe
-    Cafe myCafe(100.f, 500.f);
+    Cafe myCafe(100.f, 500.f, cafeTexture);
 
 
     // -- Load Game ---

@@ -1,14 +1,8 @@
 #include "Coin.h"
 
-Coin::Coin(float x, float y)
+Coin::Coin(float x, float y, const sf::Texture& textureInput)
 {
-	// Load Texture
-	if (!texture.loadFromFile("assets/images/coin.png"))
-	{
-	std::cout << "Error loading coin.png" << std::endl;
-	}
-
-	sprite.setTexture(texture);
+	sprite.setTexture(textureInput);
 
 	// Set Scale
 	sprite.setScale(0.1f, 0.1f);

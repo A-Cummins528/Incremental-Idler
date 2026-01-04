@@ -1,14 +1,8 @@
 #include "Cafe.h"
 
-Cafe::Cafe(float x, float y)
+Cafe::Cafe(float x, float y, const sf::Texture& textureInput)
 {
-	// Load Texture
-	if (!texture.loadFromFile("assets/images/cafe.png"))
-	{
-		std::cout << "Error loading cafe.png" << std::endl;
-	}
-
-	sprite.setTexture(texture);
+	sprite.setTexture(textureInput);
 
 	// Set Scale
 	sprite.setScale(0.05f, 0.05f);

@@ -7,7 +7,7 @@ class Coin
 public:
 
 	// Constructor: Set up the coin
-	Coin(float x, float y);
+	Coin(float x, float y, const sf::Texture& texture);
 
 	// Method to draw the coin to the window
 	void draw(sf::RenderWindow& window);
@@ -20,6 +20,5 @@ public:
 	void resetScale();
 
 private:
-	sf::Texture texture;
 	sf::Sprite sprite;
 };
