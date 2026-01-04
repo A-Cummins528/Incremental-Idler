@@ -5,20 +5,21 @@
 class Cafe
 {
 public:
-
-	// Constructor: Set up the Cafe
 	Cafe(float x, float y, const sf::Texture& texture);
 
-	// Method to draw the Cafe to the window
 	void draw(sf::RenderWindow& window);
-
-	// Method to check if clicked
 	bool isClicked(sf::Vector2f mousePos);
-
-	// Visual effect methods
 	void shrink();
 	void resetScale();
 
+	void purchase();
+	long long getCost();
+	int getOwnedCount();
+	int getIncomePerSecond();
+
 private:
 	sf::Sprite sprite;
+	long long cost;
+	int ownedCount;
+	int baseIncome;
 };

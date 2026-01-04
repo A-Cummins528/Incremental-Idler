@@ -15,32 +15,19 @@ int main()
     // --- Load Assets ---
 
     sf::Font font;
-    if (!font.loadFromFile("assets/fonts/arial.ttf"))
-    {
-        std::cout << "Error loading font!" << std::endl;
-        return -1;
-    }
+    if (!font.loadFromFile("assets/fonts/arial.ttf")) return -1;
 
-	sf::Texture coinTexture;
-    if (!coinTexture.loadFromFile("assets/images/coin.png"))
-    {
-        std::cerr << "Failed to load coin.png" << std::endl;
-		return -1;
-    }
+    sf::Texture coinTexture;
+    if (!coinTexture.loadFromFile("assets/images/coin.png")) return -1;
 
     sf::Texture cafeTexture;
-    if (!cafeTexture.loadFromFile("assets/images/cafe.png"))
-    {
-        std::cerr << "Failed to load cafe.png" << std::endl;
-        return -1;
-    }
+    if (!cafeTexture.loadFromFile("assets/images/cafe.png")) return -1;
+
+
     // --- Object Creation ---
 
-    // Coin
     Coin myCoin(400.f, 300.f, coinTexture);
-
-    // Cafe
-    Cafe myCafe(100.f, 500.f, cafeTexture);
+    Cafe myCafe(150.f, 500.f, cafeTexture);
 
 
     // -- Load Game ---
@@ -59,7 +46,6 @@ int main()
     titleText.setPosition(400.f, 50.f); // Middle X, Top Y
 
     // Score Text
-    // int score = 0;
     sf::Text scoreText;
     scoreText.setFont(font);
     scoreText.setString("Coins: " + std::to_string(score));
@@ -67,15 +53,38 @@ int main()
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setPosition(10.f, 10.f); // Top Left corner
 
+    // Cafe Info Text (To show price/owned)
+    sf::Text cafeText;
+    cafeText.setFont(font);
+    cafeText.setCharacterSize(18);
+    cafeText.setFillColor(sf::Color::Black);
+    cafeText.setPosition(50.f, 550.f); // Below the cafe sprite
+
+
+    // --- PASSIVE INCOME TIMER ---
+    sf::Clock passiveIncomeClock;
+    float timeAccumulator = 0.0f; // Stores time passed
+
     // --- Game Loop ---
     while (window.isOpen())
     {
+        // Calculate Time Passed
+        sf::Time dt = passiveIncomeClock.restart();
+        timeAccumulator += dt.asSeconds();
+
+		// Every second, add passive income
+        if (timeAccumulator >= 1.0f)
+        {
+            score += myCafe.getIncomePerSecond();
+            timeAccumulator -= 1.0f; // Reset timer
+        }
+        
         sf::Event event;
             while (window.pollEvent(event))
-        {
+            {
                 if (event.type == sf::Event::Closed)
                 {
-                    saveGame(score);
+                    saveGame(score); // To do: save cafe owned count
                     window.close();
                 }
 
@@ -86,18 +95,27 @@ int main()
                     {
                         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
+                        // Click Coin
                         if (myCoin.isClicked(mousePos))
                         {
                             score++;
-                            scoreText.setString("Coins: " + std::to_string(score));
                             myCoin.shrink();
                         }
 
+                        // Buy Cafe
                         if (myCafe.isClicked(mousePos))
                         {
-                            score = score + 100;
-                            scoreText.setString("Coins: " + std::to_string(score));
-                            myCafe.shrink();
+                            if (score >= myCafe.getCost())
+                            {
+                                score -= myCafe.getCost();
+                                myCafe.purchase();
+                                std::cout << "Cafe Purchased!" << std::endl;
+                                myCafe.shrink();
+                            }
+                            else
+                            {
+                                std::cout << "Not enough coins to purchase Cafe!" << std::endl;
+							}
                         }
                     }
                 }
@@ -110,12 +128,19 @@ int main()
                 }
             }
 
-        // Render
+        // --- Update UI Text ---
+        scoreText.setString("Coins: " + std::to_string(score));
+
+        std::string cafeString = "Cafe (Owned: " + std::to_string(myCafe.getOwnedCount()) + ")\nCost: " + std::to_string(myCafe.getCost());
+        cafeText.setString(cafeString);
+
+        // --- Render ---
         window.clear(sf::Color::White);
         myCoin.draw(window);
 		myCafe.draw(window);
         window.draw(titleText);
         window.draw(scoreText);
+		window.draw(cafeText);
         window.display();
     }
 
