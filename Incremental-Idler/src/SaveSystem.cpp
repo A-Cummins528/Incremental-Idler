@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-void saveGame(long long score, int cafesOwned)
+void saveGame(long long score, int cafesOwned, long long cafeCost)
 {
 	// Open file for writing output
 
@@ -13,11 +13,13 @@ void saveGame(long long score, int cafesOwned)
 	{
 		outFile << "Coins: " << score << std::endl; // Write the label and the score
 		outFile << "Cafes: " << cafesOwned << std::endl;
+		outFile << "CafeCost: " << cafeCost << std::endl;
 
 		outFile.close(); // Close when done
 
 		std::cout << "Game Saved: " << score << std::endl;
 		std::cout << "Cafes: " << cafesOwned << std::endl;
+		std::cout << "CafeCost: " << cafeCost << std::endl;
 	}
 	else
 	{
@@ -25,7 +27,7 @@ void saveGame(long long score, int cafesOwned)
 	}
 }
 
-void loadGame(long long& score, int& cafesOwned)
+void loadGame(long long& score, int& cafesOwned, long long& cafeCost)
 {
 	// Open file for reading (input)
 	std::ifstream inFile("assets/data/save.txt");
@@ -34,6 +36,7 @@ void loadGame(long long& score, int& cafesOwned)
 	// Reset variables
 	score = 0;
 	cafesOwned = 0;
+	cafeCost = 1000;
 
 	// Check if file exists
 	if (inFile.is_open())
@@ -45,9 +48,13 @@ void loadGame(long long& score, int& cafesOwned)
 			{
 				inFile >> score;
 			}
-			else if (label == "Cafes:")
+			if (label == "Cafes:")
 			{
 				inFile >> cafesOwned;
+			}
+			else if (label == "CafeCost:")
+			{
+				inFile >> cafeCost;
 			}
 		}
 

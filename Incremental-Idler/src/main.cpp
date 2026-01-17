@@ -10,6 +10,7 @@ int main()
     // Setup Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler");
     window.setFramerateLimit(60);
+	float increaseRate = 1.15f; // 15% increase rate for object cost
 
 
     // --- Load Assets ---
@@ -35,12 +36,14 @@ int main()
     // 1. Create variables to hold the loaded data
     long long score = 0;
     int loadedCafeCount = 0;
+	long long loadedCafeCost = 1000; // Default cost if no save exists
 
     // 2. Pass them into the loader
-    loadGame(score, loadedCafeCount);
+    loadGame(score, loadedCafeCount, loadedCafeCost);
 
     // 3. Update the Cafe object with the loaded count
 	myCafe.setOwnedCount(loadedCafeCount);
+	myCafe.setCost(loadedCafeCost);
 
 
     // Title Text
@@ -93,7 +96,7 @@ int main()
             {
                 if (event.type == sf::Event::Closed)
                 {
-                    saveGame(score, myCafe.getOwnedCount()); 
+                    saveGame(score, myCafe.getOwnedCount(), myCafe.getCost()); 
                     window.close();
                 }
 
@@ -120,7 +123,7 @@ int main()
                                 myCafe.purchase();
                                 std::cout << "Cafe Purchased!" << std::endl;
                                 myCafe.shrink();
-								myCafe.setCost(static_cast<long long>(myCafe.getCost() * 1.15)); // Increase cost by 15%
+								myCafe.setCost((myCafe.getCost() * increaseRate)); // Increase cost by 15%
                             }
                             else
                             {
