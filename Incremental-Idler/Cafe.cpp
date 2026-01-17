@@ -45,6 +45,11 @@ long long Cafe::getCost()
 	return cost;
 }
 
+void Cafe::setCost(long long newCost)
+{
+	cost = newCost;
+}
+
 int Cafe::getOwnedCount()
 {
 	return ownedCount;

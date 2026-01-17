@@ -1,2 +1,2 @@
-Coins: 620
-Cafes: 2
+Coins: 369
+Cafes: 4

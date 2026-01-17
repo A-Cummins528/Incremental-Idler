@@ -17,6 +17,7 @@ public:
 	int getOwnedCount();
 	int getIncomePerSecond();
 	void setOwnedCount(int count);
+	void setCost(long long newCost);
 
 private:
 	sf::Sprite sprite;

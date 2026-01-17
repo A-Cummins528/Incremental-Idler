@@ -120,6 +120,7 @@ int main()
                                 myCafe.purchase();
                                 std::cout << "Cafe Purchased!" << std::endl;
                                 myCafe.shrink();
+								myCafe.setCost(static_cast<long long>(myCafe.getCost() * 1.15)); // Increase cost by 15%
                             }
                             else
                             {
