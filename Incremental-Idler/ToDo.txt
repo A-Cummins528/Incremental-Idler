@@ -1,5 +1,7 @@
 Add Shop button
-Add additional objects
-extend object class to coin and cafe subclasses
 Move on click methods into class objects
 Expand Cafe options (add manager, upgrades, etc)
+Create a base Building class (cost, owned, sprite, draw(), purchase())
+Create additional buildings (Mine, Factory, Bank, etc)
+Add floating text when coins are earned
+Add sound effects for clicks and purchases
