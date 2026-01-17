@@ -10,9 +10,10 @@ Cafe::Cafe(float x, float y, const sf::Texture& textureInput)
 	sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 	sprite.setPosition(x, y);
 
-	cost = 1000;
+	long long cost = 1000;
 	ownedCount = 0;
 	baseIncome = 10;
+	cost = 1000;
 }
 
 void Cafe::draw(sf::RenderWindow& window)
