@@ -18,10 +18,12 @@ public:
 	int getIncomePerSecond();
 	void setOwnedCount(int count);
 	void setCost(long long newCost);
+	float getIncreaseRate();
 
 private:
 	sf::Sprite sprite;
 	long long cost;
 	int ownedCount;
 	int baseIncome;
+	float increaseRate = 1.15f; // 15% increase rate
 };

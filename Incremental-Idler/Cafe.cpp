@@ -35,19 +35,20 @@ void Cafe::resetScale()
 	sprite.setScale(0.05f, 0.05f);
 }
 
+float Cafe::getIncreaseRate()
+{
+	return increaseRate;
+}
+
 void Cafe::purchase()
 {
 	ownedCount++;
+	cost = (cost * getIncreaseRate());
 }
 
 long long Cafe::getCost()
 {
 	return cost;
-}
-
-void Cafe::setCost(long long newCost)
-{
-	cost = newCost;
 }
 
 int Cafe::getOwnedCount()
@@ -63,4 +64,9 @@ int Cafe::getIncomePerSecond()
 void Cafe::setOwnedCount(int count)
 {
 	ownedCount = count;
+}
+
+void Cafe::setCost(long long newCost)
+{
+	cost = newCost;
 }

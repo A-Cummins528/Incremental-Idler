@@ -10,7 +10,7 @@ int main()
     // Setup Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler");
     window.setFramerateLimit(60);
-	float increaseRate = 1.15f; // 15% increase rate for object cost
+	//float increaseRate = 1.15f; // 15% increase rate for object cost
 
 
     // --- Load Assets ---
@@ -123,7 +123,7 @@ int main()
                                 myCafe.purchase();
                                 std::cout << "Cafe Purchased!" << std::endl;
                                 myCafe.shrink();
-								myCafe.setCost((myCafe.getCost() * increaseRate)); // Increase cost by 15%
+								//myCafe.setCost((myCafe.getCost() * increaseRate)); // Increase cost by 15%
                             }
                             else
                             {
