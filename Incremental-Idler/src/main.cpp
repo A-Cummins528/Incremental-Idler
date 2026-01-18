@@ -143,12 +143,12 @@ int main()
                         // Buy Cafe
                         if (myCafe.isClicked(mousePos))
                         {
+                            myCafe.shrink();
                             if (score >= myCafe.getCost())
                             {
                                 score -= myCafe.getCost();
                                 myCafe.purchase();
                                 std::cout << "Cafe Purchased!" << std::endl;
-                                myCafe.shrink();
                             }
                             else
                             {
@@ -159,12 +159,12 @@ int main()
 						// Buy Mine
                         if (myMine.isClicked(mousePos))
                         {
+                            myMine.shrink();
                             if (score >= myMine.getCost())
                             {
                                 score -= myMine.getCost();
                                 myMine.purchase();
                                 std::cout << "Mine Purchased!" << std::endl;
-                                myMine.shrink();
                             }
                             else
                             {

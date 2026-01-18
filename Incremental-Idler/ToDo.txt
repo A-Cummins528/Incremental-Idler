@@ -7,4 +7,3 @@ Add floating text when coins are earned
 Add sound effects for clicks and purchases
 Format large numbers
 Add background music
-shrink on click not on purchase
