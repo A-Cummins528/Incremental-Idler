@@ -37,6 +37,7 @@ int main()
     
     // 1. Create variables to hold the loaded data
     long long score = 0;
+	long long incomePerSecond = 0;
     int loadedCafeCount = 0;
 	long long loadedCafeCost = 1000; // Default cost if no save exists
 	int loadedMineCount = 0;
@@ -58,7 +59,6 @@ int main()
     titleText.setString("Coin Clicker");
     titleText.setCharacterSize(36);
     titleText.setFillColor(sf::Color::Black);
-
     sf::FloatRect textRect = titleText.getLocalBounds(); // Centre Text
     titleText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
     titleText.setPosition(400.f, 50.f); // Middle X, Top Y
@@ -70,6 +70,14 @@ int main()
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setPosition(10.f, 10.f); // Top Left corner
+
+	// Passive Income Text
+    sf::Text incomeText;
+    incomeText.setFont(font);
+    incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
+    incomeText.setCharacterSize(24);
+    incomeText.setFillColor(sf::Color::Black);
+    incomeText.setPosition(10.f, 34.f); // Top Left corner
 
     // Cafe Info Text
     sf::Text cafeText;
@@ -93,6 +101,11 @@ int main()
     // --- Game Loop ---
     while (window.isOpen())
     {
+		// Calculate Income Per Second
+        incomePerSecond = 0;
+        incomePerSecond += myCafe.getIncomePerSecond();
+        incomePerSecond += myMine.getIncomePerSecond();
+
         // Calculate Time Passed
         sf::Time dt = passiveIncomeClock.restart();
         timeAccumulator += dt.asSeconds();
@@ -100,8 +113,7 @@ int main()
 		// Every second, add passive income
         if (timeAccumulator >= 1.0f)
         {
-            score += myCafe.getIncomePerSecond();
-			score += myMine.getIncomePerSecond();
+            score += incomePerSecond; // Add the rate to the score
             timeAccumulator -= 1.0f; // Reset timer
         }
         
@@ -174,6 +186,8 @@ int main()
         // --- Update UI Text ---
         scoreText.setString("Coins: " + std::to_string(score));
 
+		incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
+
         std::string cafeString = "Cafe (Owned: " + std::to_string(myCafe.getOwnedCount()) + ")\nCost: " + std::to_string(myCafe.getCost());
         cafeText.setString(cafeString);
 
@@ -187,6 +201,7 @@ int main()
 		myMine.draw(window);
         window.draw(titleText);
         window.draw(scoreText);
+		window.draw(incomeText);
 		window.draw(cafeText);
 		window.draw(mineText);
         window.display();
