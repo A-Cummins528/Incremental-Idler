@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Coin.h"
 #include "Cafe.h"
+#include "Mine.h"
 #include "SaveSystem.h"
 
 
@@ -23,12 +24,14 @@ int main()
     sf::Texture cafeTexture;
     if (!cafeTexture.loadFromFile("assets/images/cafe.png")) return -1;
 
+	sf::Texture mineTexture;
+	if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
 
     // --- Object Creation ---
 
     Coin myCoin(400.f, 300.f, coinTexture);
     Cafe myCafe(110.f, 490.f, cafeTexture);
-
+	Mine myMine(310.f, 490.f, mineTexture);
 
     // -- Load Game ---
     
@@ -36,13 +39,17 @@ int main()
     long long score = 0;
     int loadedCafeCount = 0;
 	long long loadedCafeCost = 1000; // Default cost if no save exists
+	int loadedMineCount = 0;
+	long long loadedMineCost = 10000; // Default cost if no save exists
 
     // 2. Pass them into the loader
-    loadGame(score, loadedCafeCount, loadedCafeCost);
+    loadGame(score, loadedCafeCount, loadedCafeCost, loadedMineCount, loadedMineCost);
 
     // 3. Update the Cafe object with the loaded count
 	myCafe.setOwnedCount(loadedCafeCount);
 	myCafe.setCost(loadedCafeCost);
+	myMine.setOwnedCount(loadedMineCount);
+	myMine.setCost(loadedMineCost);
 
 
     // Title Text
@@ -64,12 +71,19 @@ int main()
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setPosition(10.f, 10.f); // Top Left corner
 
-    // Cafe Info Text (To show price/owned)
+    // Cafe Info Text
     sf::Text cafeText;
     cafeText.setFont(font);
     cafeText.setCharacterSize(18);
     cafeText.setFillColor(sf::Color::Black);
     cafeText.setPosition(50.f, 550.f); // Below the cafe sprite
+
+	// Mine Info Text
+	sf::Text mineText;
+	mineText.setFont(font);
+	mineText.setCharacterSize(18);
+	mineText.setFillColor(sf::Color::Black);
+	mineText.setPosition(250.f, 550.f); // Below the mine sprite
 
 
     // --- PASSIVE INCOME TIMER ---
@@ -87,6 +101,7 @@ int main()
         if (timeAccumulator >= 1.0f)
         {
             score += myCafe.getIncomePerSecond();
+			score += myMine.getIncomePerSecond();
             timeAccumulator -= 1.0f; // Reset timer
         }
         
@@ -95,7 +110,7 @@ int main()
             {
                 if (event.type == sf::Event::Closed)
                 {
-                    saveGame(score, myCafe.getOwnedCount(), myCafe.getCost()); 
+                    saveGame(score, myCafe.getOwnedCount(), myCafe.getCost(), myMine.getOwnedCount(), myMine.getCost()); 
                     window.close();
                 }
 
@@ -128,6 +143,22 @@ int main()
                                 std::cout << "Not enough coins to purchase Cafe!" << std::endl;
 							}
                         }
+
+						// Buy Mine
+                        if (myMine.isClicked(mousePos))
+                        {
+                            if (score >= myMine.getCost())
+                            {
+                                score -= myMine.getCost();
+                                myMine.purchase();
+                                std::cout << "Mine Purchased!" << std::endl;
+                                myMine.shrink();
+                            }
+                            else
+                            {
+                                std::cout << "Not enough coins to purchase Mine!" << std::endl;
+                            }
+                        }
                     }
                 }
 
@@ -136,6 +167,7 @@ int main()
                 {
                     myCoin.resetScale();
 					myCafe.resetScale();
+					myMine.resetScale();
                 }
             }
 
@@ -145,13 +177,18 @@ int main()
         std::string cafeString = "Cafe (Owned: " + std::to_string(myCafe.getOwnedCount()) + ")\nCost: " + std::to_string(myCafe.getCost());
         cafeText.setString(cafeString);
 
+		std::string mineString = "Mine (Owned: " + std::to_string(myMine.getOwnedCount()) + ")\nCost: " + std::to_string(myMine.getCost());
+		mineText.setString(mineString);
+
         // --- Render ---
         window.clear(sf::Color::White);
         myCoin.draw(window);
 		myCafe.draw(window);
+		myMine.draw(window);
         window.draw(titleText);
         window.draw(scoreText);
 		window.draw(cafeText);
+		window.draw(mineText);
         window.display();
     }
 

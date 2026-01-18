@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Cafe.cpp" />
+    <ClCompile Include="Mine.cpp" />
     <ClCompile Include="src\Coin.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\SaveSystem.cpp" />
@@ -28,6 +29,7 @@
   <ItemGroup>
     <ClInclude Include="Building.h" />
     <ClInclude Include="Cafe.h" />
+    <ClInclude Include="Mine.h" />
     <ClInclude Include="src\Coin.h" />
     <ClInclude Include="src\SaveSystem.h" />
   </ItemGroup>
