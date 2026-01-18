@@ -10,7 +10,6 @@ int main()
     // Setup Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler");
     window.setFramerateLimit(60);
-	//float increaseRate = 1.15f; // 15% increase rate for object cost
 
 
     // --- Load Assets ---

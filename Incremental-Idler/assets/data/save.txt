@@ -1,3 +1,3 @@
-Coins: 464
-Cafes: 10
-CafeCost: 4039
+Coins: 201
+Cafes: 12
+CafeCost: 5340

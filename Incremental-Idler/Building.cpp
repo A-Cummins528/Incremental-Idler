@@ -6,7 +6,7 @@ Building::Building(float x, float y, const sf::Texture& texture, long long baseC
 	sprite.setPosition(x, y);
 
 	// Default scale
-	sprite.setScale(1.0f, 1.0f);
+	sprite.setScale(0.05f, 0.05f);
 	originalScale = sf::Vector2f(1.0f, 1.0f);
 
 	// Centre Origin
