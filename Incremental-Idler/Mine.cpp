@@ -3,5 +3,5 @@
 Mine::Mine(float x, float y, const sf::Texture& texture)
 	: Building(x, y, texture, 10000, 100)
 {
-	originalScale = sf::Vector2f(0.3f, 0.3f);
+	originalScale = sf::Vector2f(1.0f, 1.0f);
 }
