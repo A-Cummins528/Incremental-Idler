@@ -16,12 +16,14 @@ void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwne
 		outFile << "Cafes: " << cafesOwned << std::endl;
 		outFile << "CafeCost: " << cafeCost << std::endl;
 		outFile << "Mines: " << minesOwned << std::endl;
+		outFile << "MineCost: " << mineCost << std::endl;
 		outFile.close(); // Close when done
 
 		std::cout << "Game Saved: " << score << std::endl;
 		std::cout << "Cafes: " << cafesOwned << std::endl;
 		std::cout << "CafeCost: " << cafeCost << std::endl;
 		std::cout << "Mines: " << minesOwned << std::endl;
+		std::cout << "MineCost: " << mineCost << std::endl;
 	}
 	else
 	{
@@ -71,7 +73,7 @@ void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& mines
 		}
 
 		inFile.close();
-		std::cout << "Game Loaded -> Score: " << score << ", Cafes: " << cafesOwned << ", Mines: " << minesOwned << std::endl;
+		std::cout << "Game Loaded -> Score: " << score << ", Cafes: " << cafesOwned << ", Mines: " << minesOwned << ", MineCost: " << mineCost << std::endl;
 	}
 	else
 	{
