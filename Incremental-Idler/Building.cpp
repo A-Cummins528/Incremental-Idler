@@ -41,6 +41,11 @@ long long Building::getCost()
 	return cost;
 }
 
+void Building::setCost(long long newCost)
+{
+	cost = newCost;
+}
+
 int Building::getOwnedCount()
 {
 	return ownedCount;
@@ -56,7 +61,7 @@ void Building::setOwnedCount(int count)
 	ownedCount = count;
 }
 
-void Building::shirnk()
+void Building::shrink()
 {
 	// Shrink to 90% of original scale
 	sprite.setScale(originalScale.x * 0.9f, originalScale.y * 0.9f);

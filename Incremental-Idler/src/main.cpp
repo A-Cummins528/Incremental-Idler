@@ -123,7 +123,6 @@ int main()
                                 myCafe.purchase();
                                 std::cout << "Cafe Purchased!" << std::endl;
                                 myCafe.shrink();
-								//myCafe.setCost((myCafe.getCost() * increaseRate)); // Increase cost by 15%
                             }
                             else
                             {

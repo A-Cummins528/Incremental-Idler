@@ -21,9 +21,10 @@ public:
 
 	// Load Logic
 	void setOwnedCount(int count);
+	void setCost(long long newCost);
 
 	// Visuals
-	void shirnk();
+	void shrink();
 	void resetScale();
 
 protected:
