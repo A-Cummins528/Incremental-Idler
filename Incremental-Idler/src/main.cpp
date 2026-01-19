@@ -4,6 +4,8 @@
 #include "Cafe.h"
 #include "Mine.h"
 #include "SaveSystem.h"
+#include <vector>
+#include "FloatingText.h"
 
 
 int main()
@@ -53,6 +55,9 @@ int main()
 	myMine.setCost(loadedMineCost);
 
 
+    // --- TEXT MANAGER ---
+    std::vector<FloatingText> floatingTexts;  // To store all active "+1"s
+
     // Title Text
     sf::Text titleText;
     titleText.setFont(font);
@@ -94,8 +99,9 @@ int main()
 	mineText.setPosition(250.f, 550.f); // Below the mine sprite
 
 
-    // --- PASSIVE INCOME TIMER ---
+    // --- CLOCKS ---
     sf::Clock passiveIncomeClock;
+	sf::Clock frameClock; // For floating text updates
     float timeAccumulator = 0.0f; // Stores time passed
 
     // --- Game Loop ---
@@ -103,12 +109,15 @@ int main()
     {
 		// Calculate Income Per Second
         incomePerSecond = 0;
-        incomePerSecond += myCafe.getIncomePerSecond();
-        incomePerSecond += myMine.getIncomePerSecond();
+        incomePerSecond = myCafe.getIncomePerSecond() + myMine.getIncomePerSecond();
 
         // Calculate Time Passed
-        sf::Time dt = passiveIncomeClock.restart();
-        timeAccumulator += dt.asSeconds();
+        sf::Time frameTime = frameClock.restart();
+		float dt = frameTime.asSeconds();
+
+       // sf::Time dt = passiveIncomeClock.restart();
+        timeAccumulator += dt;
+        if (timeAccumulator >= 1.0f) { /*...*/ }
 
 		// Every second, add passive income
         if (timeAccumulator >= 1.0f)
@@ -117,6 +126,19 @@ int main()
             timeAccumulator -= 1.0f; // Reset timer
         }
         
+		// --- Update Floating Texts ---
+		// Loop backwards to allow safe removal
+        for (int i = 0; i < floatingTexts.size(); i++)
+        {
+			// Update returns 'false' if text has faded out
+            if (!floatingTexts[i].update(dt))
+            {
+                // Remove from vector
+                floatingTexts.erase(floatingTexts.begin() + i);
+                i--; // Adjust index after removal
+            }
+        }
+
         sf::Event event;
             while (window.pollEvent(event))
             {
@@ -138,6 +160,9 @@ int main()
                         {
                             score++;
                             myCoin.shrink();
+
+							// Create Floating Text at mouse position
+							floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
                         }
 
                         // Buy Cafe
@@ -196,14 +221,24 @@ int main()
 
         // --- Render ---
         window.clear(sf::Color::White);
+
         myCoin.draw(window);
 		myCafe.draw(window);
 		myMine.draw(window);
+
         window.draw(titleText);
         window.draw(scoreText);
 		window.draw(incomeText);
 		window.draw(cafeText);
 		window.draw(mineText);
+
+
+        // Draw the floating texts
+        for (auto& txt : floatingTexts)
+        {
+            txt.draw(window);
+        }
+
         window.display();
     }
 

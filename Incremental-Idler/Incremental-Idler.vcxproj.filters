@@ -48,6 +48,9 @@
     <ClCompile Include="Mine.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="FloatingText.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Coin.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
