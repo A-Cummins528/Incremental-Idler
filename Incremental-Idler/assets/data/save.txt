@@ -1,5 +1,5 @@
-Coins: 526
-Cafes: 3
-CafeCost: 1520
+Coins: 1120
+Cafes: 4
+CafeCost: 1748
 Mines: 0
 MineCost: 10000
