@@ -1,5 +1,5 @@
-Coins: 1293
-Cafes: 6
-CafeCost: 2311
-Mines: 0
-MineCost: 10000
+Coins: 2203
+Cafes: 10
+CafeCost: 4039
+Mines: 3
+MineCost: 15208

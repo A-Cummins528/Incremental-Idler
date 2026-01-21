@@ -203,8 +203,15 @@ int main()
                             myMine.shrink();
                             if (score >= myMine.getCost())
                             {
+								long long cost = myMine.getCost();
+
                                 score -= myMine.getCost();
                                 myMine.purchase();
+
+                                std::string costString = "-" + std::to_string(cost);
+
+								floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
+
                                 std::cout << "Mine Purchased!" << std::endl;
                             }
                             else
