@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "Coin.h"
 #include "Cafe.h"
@@ -6,7 +7,6 @@
 #include "SaveSystem.h"
 #include <vector>
 #include "FloatingText.h"
-
 
 int main()
 {
@@ -28,6 +28,13 @@ int main()
 
 	sf::Texture mineTexture;
 	if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
+
+    sf::SoundBuffer clickBuffer;
+    if (!clickBuffer.loadFromFile("assets/audio/coin.mp3")) return -1;
+
+    sf::Sound clickSound;
+    clickSound.setBuffer(clickBuffer);
+	clickSound.setVolume(50.f); // Set volume to 50%
 
     // --- Object Creation ---
 
@@ -160,6 +167,8 @@ int main()
                             score++;
                             myCoin.shrink();
 
+                            clickSound.play();
+
 							// Create Floating Text at mouse position
 							floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
                         }
@@ -230,7 +239,6 @@ int main()
 		window.draw(incomeText);
 		window.draw(cafeText);
 		window.draw(mineText);
-
 
         // Draw the floating texts
         for (auto& txt : floatingTexts)

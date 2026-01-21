@@ -1,4 +1,4 @@
-Coins: 1120
+Coins: 1913
 Cafes: 4
 CafeCost: 1748
 Mines: 0
