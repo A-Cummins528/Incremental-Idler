@@ -1,7 +1,7 @@
 #include "FloatingText.h"
 
 FloatingText::FloatingText(float x, float y, const std::string& text, const sf::Font& font)
-	: lifeTime(0.0f), maxLifeTime(2.0f), speed(50.0f)
+	: lifeTime(0.0f), maxLifeTime(2.0f), velocity(-50.0f)
 {
 	textObj.setFont(font);
 	textObj.setString(text);
@@ -12,7 +12,21 @@ FloatingText::FloatingText(float x, float y, const std::string& text, const sf::
 	// Settings
 	maxLifeTime = 1.0f; // seconds
 	lifeTime = 0.0f;
-	speed = 100.0f; // pixels per second
+	velocity = -100.0f; // pixels per second, Negative = Up
+}
+
+// New Constructor for the shop
+FloatingText::FloatingText(float x, float y, const std::string& text, const sf::Font& font, sf::Color color, float speedY)
+{
+	textObj.setFont(font);
+	textObj.setString(text);
+	textObj.setCharacterSize(24);
+	textObj.setFillColor(color);
+	textObj.setPosition(x, y);
+	// Settings
+	maxLifeTime = 1.0f; // seconds
+	lifeTime = 0.0f;
+	velocity = speedY;
 }
 
 bool FloatingText::update(float dt)
@@ -24,7 +38,7 @@ bool FloatingText::update(float dt)
 		return false;
 
 	// Move up
-	textObj.move(0, -speed * dt);
+	textObj.move(0, velocity * dt);
 
 	// Fade out
 	// Calculate Alpha (Transparency). 255 = Solid, 0 = Invisible.

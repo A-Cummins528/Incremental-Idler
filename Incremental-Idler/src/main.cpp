@@ -179,8 +179,16 @@ int main()
                             myCafe.shrink();
                             if (score >= myCafe.getCost())
                             {
+                                // Capture the cost before purchase
+								long long cost = myCafe.getCost();
+
                                 score -= myCafe.getCost();
                                 myCafe.purchase();
+
+								std::string costString = "-" + std::to_string(cost);
+
+                                floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
+                        
                                 std::cout << "Cafe Purchased!" << std::endl;
                             }
                             else
