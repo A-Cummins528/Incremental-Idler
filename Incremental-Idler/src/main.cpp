@@ -115,7 +115,6 @@ int main()
         sf::Time frameTime = frameClock.restart();
 		float dt = frameTime.asSeconds();
 
-       // sf::Time dt = passiveIncomeClock.restart();
         timeAccumulator += dt;
         if (timeAccumulator >= 1.0f) { /*...*/ }
 
