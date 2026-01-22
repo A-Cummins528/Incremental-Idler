@@ -29,12 +29,26 @@ int main()
 	sf::Texture mineTexture;
 	if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
 
-    sf::SoundBuffer clickBuffer;
-    if (!clickBuffer.loadFromFile("assets/audio/coin.mp3")) return -1;
 
-    sf::Sound clickSound;
-    clickSound.setBuffer(clickBuffer);
-	clickSound.setVolume(50.f); // Set volume to 50%
+	// --- AUDIO SETUP ---
+
+    // 1. Coin Click
+    sf::SoundBuffer coinBuffer;
+    if (!coinBuffer.loadFromFile("assets/audio/coin.mp3")) return -1;
+
+    sf::Sound coinSound;
+    coinSound.setBuffer(coinBuffer);
+    coinSound.setVolume(50.f);
+
+	// 2. Purchase Sound
+    sf::SoundBuffer purchaseBuffer;
+    if (!purchaseBuffer.loadFromFile("assets/audio/purchase.mp3")) return -1;
+
+    sf::Sound purchaseSound; // <--- New Speaker
+    purchaseSound.setBuffer(purchaseBuffer);
+    purchaseSound.setVolume(50.f);
+
+
 
     // --- Object Creation ---
 
@@ -166,8 +180,7 @@ int main()
                         {
                             score++;
                             myCoin.shrink();
-
-                            clickSound.play();
+                            coinSound.play();
 
 							// Create Floating Text at mouse position
 							floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
@@ -184,6 +197,7 @@ int main()
 
                                 score -= myCafe.getCost();
                                 myCafe.purchase();
+                                purchaseSound.play();
 
 								std::string costString = "-" + std::to_string(cost);
 
@@ -207,12 +221,15 @@ int main()
 
                                 score -= myMine.getCost();
                                 myMine.purchase();
+                                purchaseSound.play();
 
                                 std::string costString = "-" + std::to_string(cost);
 
 								floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
 
                                 std::cout << "Mine Purchased!" << std::endl;
+
+
                             }
                             else
                             {
