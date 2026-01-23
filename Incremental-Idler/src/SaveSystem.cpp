@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwned, long long mineCost)
+void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwned, long long mineCost, int banksOwned, long long bankCost)
 {
 	// Open file for writing output
 
@@ -17,6 +17,7 @@ void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwne
 		outFile << "CafeCost: " << cafeCost << std::endl;
 		outFile << "Mines: " << minesOwned << std::endl;
 		outFile << "MineCost: " << mineCost << std::endl;
+		outFile << "Banks: " << banksOwned << std::endl;
 		outFile.close(); // Close when done
 
 		std::cout << "Game Saved: " << score << std::endl;
@@ -24,6 +25,8 @@ void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwne
 		std::cout << "CafeCost: " << cafeCost << std::endl;
 		std::cout << "Mines: " << minesOwned << std::endl;
 		std::cout << "MineCost: " << mineCost << std::endl;
+		std::cout << "Banks: " << banksOwned << std::endl;
+		std::cout << "BankCost: " << bankCost << std::endl;
 	}
 	else
 	{
@@ -31,7 +34,7 @@ void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwne
 	}
 }
 
-void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& minesOwned, long long& mineCost)
+void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& minesOwned, long long& mineCost, int& banksOwned, long long& bankCost)
 {
 	// Open file for reading (input)
 	std::ifstream inFile("assets/data/save.txt");
@@ -43,6 +46,7 @@ void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& mines
 	cafeCost = 1000;
 	minesOwned = 0;
 	mineCost = 10000;
+	bankCost = 100000;
 
 	// Check if file exists
 	if (inFile.is_open())
@@ -66,14 +70,22 @@ void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& mines
 			{
 				inFile >> minesOwned;
 			}
-			else if (label == "MineCost:")
+			if (label == "MineCost:")
 			{
 				inFile >> mineCost;
+			}
+			if (label == "Banks:")
+			{
+				inFile >> banksOwned;
+			}
+			else if (label == "BankCost:")
+			{
+				inFile >> bankCost;
 			}
 		}
 
 		inFile.close();
-		std::cout << "Game Loaded -> Score: " << score << ", Cafes: " << cafesOwned << ", Mines: " << minesOwned << ", MineCost: " << mineCost << std::endl;
+		std::cout << "Game Loaded -> Score: " << score << ", Cafes: " << cafesOwned << ", Mines: " << minesOwned << ", Banks: " << banksOwned << std::endl;
 	}
 	else
 	{

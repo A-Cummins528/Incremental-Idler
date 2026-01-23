@@ -1,5 +1,6 @@
-Coins: 109609
+Coins: 14379
 Cafes: 13
 CafeCost: 6141
 Mines: 4
 MineCost: 17489
+Banks: 1
