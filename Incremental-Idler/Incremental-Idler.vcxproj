@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bank.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Cafe.cpp" />
     <ClCompile Include="FloatingText.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\SaveSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bank.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Cafe.h" />
     <ClInclude Include="FloatingText.h" />

@@ -3,6 +3,5 @@ Move on click methods into class objects
 Expand Building options (add manager, upgrades, etc)
 Create additional buildings (Mine, Factory, Bank, etc)
 Reassess balancing of costs and earnings
-Add sound effects for purchases
 Format large numbers
 Add background music

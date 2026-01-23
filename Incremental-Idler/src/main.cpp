@@ -1,12 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <vector>
 #include "Coin.h"
 #include "Cafe.h"
 #include "Mine.h"
+#include "Bank.h"
 #include "SaveSystem.h"
-#include <vector>
 #include "FloatingText.h"
+
 
 int main()
 {
@@ -29,6 +31,9 @@ int main()
 	sf::Texture mineTexture;
 	if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
 
+    sf::Texture bankTexture;
+    if (!bankTexture.loadFromFile("assets/images/bank.png")) return -1;
+
 
 	// --- AUDIO SETUP ---
 
@@ -44,7 +49,7 @@ int main()
     sf::SoundBuffer purchaseBuffer;
     if (!purchaseBuffer.loadFromFile("assets/audio/purchase.mp3")) return -1;
 
-    sf::Sound purchaseSound; // <--- New Speaker
+    sf::Sound purchaseSound; 
     purchaseSound.setBuffer(purchaseBuffer);
     purchaseSound.setVolume(50.f);
 
