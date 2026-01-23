@@ -147,7 +147,7 @@ int main()
     {
 		// Calculate Income Per Second
         incomePerSecond = 0;
-        incomePerSecond = myCafe.getIncomePerSecond() + myMine.getIncomePerSecond();
+        incomePerSecond = myCafe.getIncomePerSecond() + myMine.getIncomePerSecond() + myBank.getIncomePerSecond();
 
         // Calculate Time Passed
         sf::Time frameTime = frameClock.restart();
@@ -275,17 +275,22 @@ int main()
                             }
                         }
 
-                    }
 
-                    // Mouse Released
-                    if (event.type == sf::Event::MouseButtonReleased)
-                    {
-                        myCoin.resetScale();
-                        myCafe.resetScale();
-                        myMine.resetScale();
                     }
 
                 }
+                        // Mouse Released
+                        if (event.type == sf::Event::MouseButtonReleased)
+                        {
+                            myCoin.resetScale();
+                            myCafe.resetScale();
+                            myMine.resetScale();
+                            myBank.resetScale();
+                        }
+
+                    
+
+                
             }
 
         // --- Update UI Text ---
@@ -300,6 +305,7 @@ int main()
 		mineText.setString(mineString);
 
 		std::string bankString = "Bank (Owned: " + std::to_string(myBank.getOwnedCount()) + ")\nCost: " + std::to_string(myBank.getCost());
+		bankText.setString(bankString);
 
         // --- Render ---
         window.clear(sf::Color::White);
@@ -307,6 +313,7 @@ int main()
         myCoin.draw(window);
 		myCafe.draw(window);
 		myMine.draw(window);
+		myBank.draw(window);
 
         window.draw(titleText);
         window.draw(scoreText);
