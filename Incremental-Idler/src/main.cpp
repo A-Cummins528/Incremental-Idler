@@ -58,11 +58,7 @@ int main()
 
     // --- Object Creation ---
 
-   // Coin myCoin(400.f, 300.f, coinTexture);
-  //  Cafe myCafe(110.f, 490.f, cafeTexture);
-	//Mine myMine(310.f, 490.f, mineTexture);
-	//Bank myBank(510.f, 490.f, bankTexture);
-
+    Coin myCoin(400.f, 300.f, coinTexture);
 
     // The Shop List
     std::vector<std::unique_ptr<Building>> shop;
@@ -87,12 +83,14 @@ int main()
     loadGame(score, loadedCafeCount, loadedCafeCost, loadedMineCount, loadedMineCost, loadedBankCount, loadedBankCost);
 
     // 3. Update the Cafe object with the loaded count
-	myCafe.setOwnedCount(loadedCafeCount);
-	myCafe.setCost(loadedCafeCost);
-	myMine.setOwnedCount(loadedMineCount);
-	myMine.setCost(loadedMineCost);
-	myBank.setOwnedCount(loadedBankCount);
-	myBank.setCost(loadedBankCost);
+	//myCafe.setOwnedCount(loadedCafeCount);
+	//myCafe.setCost(loadedCafeCost);
+	//myMine.setOwnedCount(loadedMineCount);
+	//myMine.setCost(loadedMineCost);
+	//myBank.setOwnedCount(loadedBankCount);
+	//myBank.setCost(loadedBankCost);
+
+	// TO DO: Update all buildings in the shop vector
 
 
     // --- TEXT MANAGER ---
@@ -318,11 +316,6 @@ int main()
 
         // --- Render ---
         window.clear(sf::Color::White);
-
-       // myCoin.draw(window);
-		//myCafe.draw(window);
-		//myMine.draw(window);
-		//myBank.draw(window);
 
         for (auto& building : shop) {
             building->draw(window);
