@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "Coin.h"
 #include "Cafe.h"
 #include "Mine.h"
@@ -57,10 +58,18 @@ int main()
 
     // --- Object Creation ---
 
-    Coin myCoin(400.f, 300.f, coinTexture);
-    Cafe myCafe(110.f, 490.f, cafeTexture);
-	Mine myMine(310.f, 490.f, mineTexture);
-	Bank myBank(510.f, 490.f, bankTexture);
+   // Coin myCoin(400.f, 300.f, coinTexture);
+  //  Cafe myCafe(110.f, 490.f, cafeTexture);
+	//Mine myMine(310.f, 490.f, mineTexture);
+	//Bank myBank(510.f, 490.f, bankTexture);
+
+
+    // The Shop List
+    std::vector<std::unique_ptr<Building>> shop;
+
+    shop.push_back(std::make_unique<Cafe>(110.f, 490.f, cafeTexture));
+    shop.push_back(std::make_unique<Mine>(310.f, 490.f, mineTexture));
+    shop.push_back(std::make_unique<Bank>(510.f, 490.f, bankTexture));
 
     // -- Load Game ---
     
@@ -310,10 +319,14 @@ int main()
         // --- Render ---
         window.clear(sf::Color::White);
 
-        myCoin.draw(window);
-		myCafe.draw(window);
-		myMine.draw(window);
-		myBank.draw(window);
+       // myCoin.draw(window);
+		//myCafe.draw(window);
+		//myMine.draw(window);
+		//myBank.draw(window);
+
+        for (auto& building : shop) {
+            building->draw(window);
+        }
 
         window.draw(titleText);
         window.draw(scoreText);
