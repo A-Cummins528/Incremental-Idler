@@ -154,7 +154,9 @@ int main()
     {
 		// Calculate Income Per Second
         incomePerSecond = 0;
-        incomePerSecond = myCafe.getIncomePerSecond() + myMine.getIncomePerSecond() + myBank.getIncomePerSecond();
+        for (const auto& building : shop) {
+            incomePerSecond += building->getIncomePerSecond();
+        }
 
         // Calculate Time Passed
         sf::Time frameTime = frameClock.restart();
@@ -210,6 +212,14 @@ int main()
                             floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
                         }
 
+						// --- TO DO : Loop through shop buildings ---
+                        for (auto& building : shop) {
+                            if (building->isClicked(mousePos)) {
+                                building->shrink();
+                            }
+						}
+                        
+                        
                         // Buy Cafe
                         if (myCafe.isClicked(mousePos))
                         {
@@ -290,9 +300,10 @@ int main()
                         if (event.type == sf::Event::MouseButtonReleased)
                         {
                             myCoin.resetScale();
-                            myCafe.resetScale();
-                            myMine.resetScale();
-                            myBank.resetScale();
+                            
+                            for (const auto& building : shop) {
+                                building->resetScale();
+                            }                                                
                         }
 
                     
@@ -317,6 +328,7 @@ int main()
         // --- Render ---
         window.clear(sf::Color::White);
 
+        // Draw the buildings
         for (auto& building : shop) {
             building->draw(window);
         }
