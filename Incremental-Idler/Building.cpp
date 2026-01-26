@@ -1,4 +1,6 @@
 #include "Building.h"
+#include <iostream>
+#include <string>
 
 Building::Building(float x, float y, const sf::Texture& texture, long long baseCost, int incomeAmt)
 {
@@ -20,6 +22,8 @@ Building::Building(float x, float y, const sf::Texture& texture, long long baseC
 	increaseRate = 1.15f; // 15% increase rate
 }
 
+
+
 void Building::draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
@@ -34,6 +38,8 @@ void Building::purchase()
 {
 	ownedCount++;
 	cost = (cost * increaseRate);
+	shrink();
+	std::cout << getClassName() << " Purchased!" << std::endl;
 }
 
 long long Building::getCost()
@@ -70,4 +76,8 @@ void Building::shrink()
 void Building::resetScale()
 {
 	sprite.setScale(originalScale);
+}
+
+std::string Building::getClassName() const {
+	return "Building";
 }

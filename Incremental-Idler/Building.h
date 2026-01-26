@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <string>
+
 class Building
 {
 public:
@@ -12,6 +14,7 @@ public:
 	// --- SHARED FUNCTIONS ---
 	void draw(sf::RenderWindow& window);
 	bool isClicked(sf::Vector2f mousePos);
+	virtual std::string getClassName() const;
 
 	// Shop Logic
 	void purchase();
