@@ -5,4 +5,6 @@ class Cafe : public Building
 {
 public:
 	Cafe(float x, float y, const sf::Texture& texture);
+
+	std::string getClassName() const override;
 };

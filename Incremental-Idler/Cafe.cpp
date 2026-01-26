@@ -5,3 +5,7 @@ Cafe::Cafe(float x, float y, const sf::Texture& texture)
 {
 
 }
+
+std::string Cafe::getClassName() const {
+	return "Cafe";
+}
