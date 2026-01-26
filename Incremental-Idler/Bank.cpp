@@ -4,3 +4,7 @@ Bank::Bank(float x, float y, const sf::Texture& texture)
 {
 
 }
+
+std::string Bank::getClassName() const {
+	return "Bank";
+}

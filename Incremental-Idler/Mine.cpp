@@ -5,3 +5,7 @@ Mine::Mine(float x, float y, const sf::Texture& texture)
 {
 	
 }
+
+std::string Mine::getClassName() const {
+	return "Mine";
+}
