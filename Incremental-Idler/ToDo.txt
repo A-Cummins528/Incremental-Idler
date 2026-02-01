@@ -6,3 +6,4 @@ Reassess balancing of costs and earnings
 Format large numbers
 Add background music
 Implement Unit Tests & Github Actions for CI/CD
+Incorporate Docker containerization for easier deployment
