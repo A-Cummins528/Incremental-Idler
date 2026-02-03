@@ -82,6 +82,8 @@ int main()
     // 2. Pass them into the loader
     loadGame(score, loadedCafeCount, loadedCafeCost, loadedMineCount, loadedMineCost, loadedBankCount, loadedBankCost);
 
+    // --- TO DO --- Update loading of building count and cost
+   
     // 3. Update the Cafe object with the loaded count
 	//myCafe.setOwnedCount(loadedCafeCount);
 	//myCafe.setCost(loadedCafeCost);
@@ -190,6 +192,8 @@ int main()
             {
                 if (event.type == sf::Event::Closed)
                 {
+                    // --- TO DO -- fix save game feature
+                    
                     //saveGame(score, myCafe.getOwnedCount(), myCafe.getCost(), myMine.getOwnedCount(), myMine.getCost(), myBank.getOwnedCount(), myBank.getCost());
                     window.close();
                 }
@@ -212,7 +216,7 @@ int main()
                             floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
                         }
 
-						// --- TO DO : Loop through shop buildings ---
+						// --- Building Purchase Logic ---
                         for (auto& building : shop) {
                             if (building->isClicked(mousePos)) {
                                 building->shrink();
@@ -233,88 +237,10 @@ int main()
                                 }
                                 else {
                                     std::cout << "Not enough coins for " << building->getClassName() << "!" << std::endl;
-                                }
-
-                             
+                                }                           
                             }
-						}
-                        
-                        
-                        //// Buy Cafe
-                        //if (myCafe.isClicked(mousePos))
-                        //{
-                        //    myCafe.shrink();
-                        //    if (score >= myCafe.getCost())
-                        //    {
-                        //        // Capture the cost before purchase
-                        //        long long cost = myCafe.getCost();
-
-                        //        score -= myCafe.getCost();
-                        //        myCafe.purchase();
-                        //        purchaseSound.play();
-
-                        //        std::string costString = "-" + std::to_string(cost);
-
-                        //        floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
-
-                        //        std::cout << "Cafe Purchased!" << std::endl;
-                        //    }
-                        //    else
-                        //    {
-                        //        std::cout << "Not enough coins to purchase Cafe!" << std::endl;
-                        //    }
-                        //}
-
-                        //// Buy Mine
-                        //if (myMine.isClicked(mousePos))
-                        //{
-                        //    myMine.shrink();
-                        //    if (score >= myMine.getCost())
-                        //    {
-                        //        long long cost = myMine.getCost();
-
-                        //        score -= myMine.getCost();
-                        //        myMine.purchase();
-                        //        purchaseSound.play();
-
-                        //        std::string costString = "-" + std::to_string(cost);
-
-                        //        floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
-
-                        //        std::cout << "Mine Purchased!" << std::endl;
-                        //    }
-                        //    else
-                        //    {
-                        //        std::cout << "Not enough coins to purchase Mine!" << std::endl;
-                        //    }
-                        //}
-
-                        //// Buy Bank
-                        //if (myBank.isClicked(mousePos))
-                        //{
-                        //    myBank.shrink();
-                        //    if (score >= myBank.getCost())
-                        //    {
-                        //        long long cost = myBank.getCost();
-                        //        score -= myBank.getCost();
-                        //        myBank.purchase();
-                        //        purchaseSound.play();
-
-                        //        std::string costString = "-" + std::to_string(cost);
-
-                        //        floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
-
-                        //        std::cout << "Bank Purchased!" << std::endl;
-                        //    }
-                        //    else
-                        //    {
-                        //        std::cout << "Not enough coins to purchase Bank!" << std::endl;
-                        //    }
-                        //}
-
-
+						}                       
                     }
-
                 }
                         // Mouse Released
                         if (event.type == sf::Event::MouseButtonReleased)
@@ -324,11 +250,7 @@ int main()
                             for (const auto& building : shop) {
                                 building->resetScale();
                             }                                                
-                        }
-
-                    
-
-                
+                        }                         
             }
 
         // --- Update UI Text ---
@@ -336,14 +258,14 @@ int main()
 
 		incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
 
-        //std::string cafeString = "Cafe (Owned: " + std::to_string(myCafe.getOwnedCount()) + ")\nCost: " + std::to_string(myCafe.getCost());
-       // cafeText.setString(cafeString);
+        std::string cafeString = "Cafe (Owned: " + std::to_string(myCafe.getOwnedCount()) + ")\nCost: " + std::to_string(myCafe.getCost());
+        cafeText.setString(cafeString);
 
-		//std::string mineString = "Mine (Owned: " + std::to_string(myMine.getOwnedCount()) + ")\nCost: " + std::to_string(myMine.getCost());
-		//mineText.setString(mineString);
+		std::string mineString = "Mine (Owned: " + std::to_string(myMine.getOwnedCount()) + ")\nCost: " + std::to_string(myMine.getCost());
+		mineText.setString(mineString);
 
-		//std::string bankString = "Bank (Owned: " + std::to_string(myBank.getOwnedCount()) + ")\nCost: " + std::to_string(myBank.getCost());
-		//bankText.setString(bankString);
+		std::string bankString = "Bank (Owned: " + std::to_string(myBank.getOwnedCount()) + ")\nCost: " + std::to_string(myBank.getCost());
+		bankText.setString(bankString);
 
         // --- Render ---
         window.clear(sf::Color::White);
