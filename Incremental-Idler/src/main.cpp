@@ -221,7 +221,7 @@ int main()
                             if (building->isClicked(mousePos)) {
                                 building->shrink();
 
-                                if (score > -building->getCost()) {
+                                if (score >= building->getCost()) {
 
                                     // Capture cost
                                     long long cost = building->getCost();
