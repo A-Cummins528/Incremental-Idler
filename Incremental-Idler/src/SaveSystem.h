@@ -1,8 +1,7 @@
 #pragma once
+#include <vector>
+#include <memory>
+#include "Building.h"
 
-// Saves the current score to a file
-void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwned, long long mineCost, int banksOwned, long long bankCost);
-
-// Loads the score from a file (returns 0 if no file exists)
-// Pass references (&) so the function can change these variables directly
-void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& minesOwned, long long& mineCost, int& banksOwned, long long & bankCost);
+void saveGame(long long score, const std::vector<std::unique_ptr<Building>>& shop);
+void loadGame(long long& score, std::vector<std::unique_ptr<Building>>& shop);
