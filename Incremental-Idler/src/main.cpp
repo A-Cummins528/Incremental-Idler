@@ -18,183 +18,145 @@ int main()
     window.setFramerateLimit(60);
 
 
-    // --- Load Assets ---
-
+    // --- LOAD ASSETS ---
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/arial.ttf")) return -1;
 
     sf::Texture coinTexture;
     if (!coinTexture.loadFromFile("assets/images/coin.png")) return -1;
 
-    sf::Texture cafeTexture;
+    // TO DO: load these directly into the vector creation
+    sf::Texture cafeTexture, mineTexture, bankTexture;
     if (!cafeTexture.loadFromFile("assets/images/cafe.png")) return -1;
-
-	sf::Texture mineTexture;
-	if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
-
-    sf::Texture bankTexture;
+    if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
     if (!bankTexture.loadFromFile("assets/images/bank.png")) return -1;
 
 
-	// --- AUDIO SETUP ---
-
-    // 1. Coin Click
-    sf::SoundBuffer coinBuffer;
+	// --- AUDIO ---
+    sf::SoundBuffer coinBuffer, purchaseBuffer;
     if (!coinBuffer.loadFromFile("assets/audio/coin.mp3")) return -1;
-
-    sf::Sound coinSound;
-    coinSound.setBuffer(coinBuffer);
-    coinSound.setVolume(50.f);
-
-	// 2. Purchase Sound
-    sf::SoundBuffer purchaseBuffer;
     if (!purchaseBuffer.loadFromFile("assets/audio/purchase.mp3")) return -1;
 
-    sf::Sound purchaseSound; 
+    sf::Sound coinSound, purchaseSound;
+    coinSound.setBuffer(coinBuffer);
+    coinSound.setVolume(50.f);
     purchaseSound.setBuffer(purchaseBuffer);
     purchaseSound.setVolume(50.f);
 
 
-
-    // --- Object Creation ---
-
+    // --- OBJECTS ---
     Coin myCoin(400.f, 300.f, coinTexture);
 
     // The Shop List
     std::vector<std::unique_ptr<Building>> shop;
-
     shop.push_back(std::make_unique<Cafe>(110.f, 490.f, cafeTexture));
     shop.push_back(std::make_unique<Mine>(310.f, 490.f, mineTexture));
     shop.push_back(std::make_unique<Bank>(510.f, 490.f, bankTexture));
 
-    // -- Load Game ---
-    
-    // 1. Create variables to hold the loaded data
+    // --- LOAD GAME ---
     long long score = 0;
-	long long incomePerSecond = 0;
-    int loadedCafeCount = 0;
-	long long loadedCafeCost = 1000; // Default cost if no save exists
-	int loadedMineCount = 0;
-	long long loadedMineCost = 10000; // Default cost if no save exists
-	int loadedBankCount = 0;
-	long long loadedBankCost = 100000; // Default cost if no save exists
-
-    // 2. Pass them into the loader
-    loadGame(score, loadedCafeCount, loadedCafeCost, loadedMineCount, loadedMineCost, loadedBankCount, loadedBankCost);
-
-    // --- TO DO --- Update loading of building count and cost
-   
-    // 3. Update the Cafe object with the loaded count
-	//myCafe.setOwnedCount(loadedCafeCount);
-	//myCafe.setCost(loadedCafeCost);
-	//myMine.setOwnedCount(loadedMineCount);
-	//myMine.setCost(loadedMineCost);
-	//myBank.setOwnedCount(loadedBankCount);
-	//myBank.setCost(loadedBankCost);
-
-	// TO DO: Update all buildings in the shop vector
+    loadGame(score, shop);
 
 
-    // --- TEXT MANAGER ---
-    std::vector<FloatingText> floatingTexts;  // To store all active "+1"s
-
+    // --- UI TEXT SETUP ---
+    
     // Title Text
-    sf::Text titleText;
-    titleText.setFont(font);
-    titleText.setString("Coin Clicker");
-    titleText.setCharacterSize(36);
+    sf::Text titleText("Coin Clicker", font, 36);
     titleText.setFillColor(sf::Color::Black);
-    sf::FloatRect textRect = titleText.getLocalBounds(); // Centre Text
+    sf::FloatRect textRect = titleText.getLocalBounds();
     titleText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    titleText.setPosition(400.f, 50.f); // Middle X, Top Y
+    titleText.setPosition(400.f, 50.f);
 
     // Score Text
-    sf::Text scoreText;
-    scoreText.setFont(font);
-    scoreText.setString("Coins: " + std::to_string(score));
-    scoreText.setCharacterSize(24);
+    sf::Text scoreText("Coins: 0", font, 24);
     scoreText.setFillColor(sf::Color::Black);
-    scoreText.setPosition(10.f, 10.f); // Top Left corner
+    scoreText.setPosition(10.f, 10.f);
 
 	// Passive Income Text
-    sf::Text incomeText;
-    incomeText.setFont(font);
-    incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
-    incomeText.setCharacterSize(24);
+    sf::Text incomeText("Coins per second: 0", font, 24);
     incomeText.setFillColor(sf::Color::Black);
-    incomeText.setPosition(10.f, 34.f); // Top Left corner
+    incomeText.setPosition(10.f, 34.f);
+    
+    // Dynamic Shop Texts (One for each building)
+    std::vector<sf::Text> shopLabels;
+    for (size_t i = 0; i < shop.size(); i++) {
+        sf::Text t("", font, 18);
+        t.setFillColor(sf::Color::Black);
+        // Position it below the specific building (assuming Y=490 is center)
+        // Offset Y by +60 to be under the sprite
+        t.setPosition(shop[i]->getSpritePosition().x - 50, 490.f + 60.f);
+        shopLabels.push_back(t);
+    }
+    // To DO: add 'sf::Vector2f getSpritePosition()' to Building.h 
+   // shopLabels[0].setPosition(50.f, 550.f);  // Cafe
+   // shopLabels[1].setPosition(250.f, 550.f); // Mine
+    //shopLabels[2].setPosition(450.f, 550.f); // Bank
 
-    // Cafe Info Text
-    sf::Text cafeText;
-    cafeText.setFont(font);
-    cafeText.setCharacterSize(18);
-    cafeText.setFillColor(sf::Color::Black);
-    cafeText.setPosition(50.f, 550.f); // Below the cafe sprite
-
-	// Mine Info Text
-	sf::Text mineText;
-	mineText.setFont(font);
-	mineText.setCharacterSize(18);
-	mineText.setFillColor(sf::Color::Black);
-	mineText.setPosition(250.f, 550.f); // Below the mine sprite
-
-	// Bank Info Text
-	sf::Text bankText;
-	bankText.setFont(font);
-	bankText.setCharacterSize(18);
-	bankText.setFillColor(sf::Color::Black);
-	bankText.setPosition(450.f, 550.f); // Below the bank sprite
-
-
-    // --- CLOCKS ---
+    std::vector<FloatingText> floatingTexts;
     sf::Clock passiveIncomeClock;
-	sf::Clock frameClock; // For floating text updates
+    sf::Clock frameClock; // For floating text updates
     float timeAccumulator = 0.0f; // Stores time passed
+    long long incomePerSecond = 0;
+
+
+ //   // Cafe Info Text
+ //   sf::Text cafeText;
+ //   cafeText.setFont(font);
+ //   cafeText.setCharacterSize(18);
+ //   cafeText.setFillColor(sf::Color::Black);
+ //   cafeText.setPosition(50.f, 550.f); // Below the cafe sprite
+
+	//// Mine Info Text
+	//sf::Text mineText;
+	//mineText.setFont(font);
+	//mineText.setCharacterSize(18);
+	//mineText.setFillColor(sf::Color::Black);
+	//mineText.setPosition(250.f, 550.f); // Below the mine sprite
+
+	//// Bank Info Text
+	//sf::Text bankText;
+	//bankText.setFont(font);
+	//bankText.setCharacterSize(18);
+	//bankText.setFillColor(sf::Color::Black);
+	//bankText.setPosition(450.f, 550.f); // Below the bank sprite
+
 
     // --- Game Loop ---
     while (window.isOpen())
     {
-		// Calculate Income Per Second
+        // Calculate Time Passed
+        sf::Time frameTime = frameClock.restart();
+        float dt = frameTime.asSeconds();
+        
+        // Calculate Income Per Second
         incomePerSecond = 0;
         for (const auto& building : shop) {
             incomePerSecond += building->getIncomePerSecond();
         }
 
-        // Calculate Time Passed
-        sf::Time frameTime = frameClock.restart();
-		float dt = frameTime.asSeconds();
-
+        // Passive Income Timer
         timeAccumulator += dt;
-        if (timeAccumulator >= 1.0f) { /*...*/ }
-
-		// Every second, add passive income
         if (timeAccumulator >= 1.0f)
         {
-            score += incomePerSecond; // Add the rate to the score
-            timeAccumulator -= 1.0f; // Reset timer
+            score += incomePerSecond;
+            timeAccumulator -= 1.0f;
         }
         
-		// --- Update Floating Texts ---
-		// Loop backwards to allow safe removal
-        for (int i = 0; i < floatingTexts.size(); i++)
-        {
-			// Update returns 'false' if text has faded out
-            if (!floatingTexts[i].update(dt))
-            {
-                // Remove from vector
+		// Update Floating Text
+        for (int i = 0; i < floatingTexts.size(); i++) {
+            if (!floatingTexts[i].update(dt)) {
                 floatingTexts.erase(floatingTexts.begin() + i);
-                i--; // Adjust index after removal
+                i--;
             }
         }
 
+        // Events
         sf::Event event;
             while (window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
                 {
-                    // --- TO DO -- fix save game feature
-                    
-                    //saveGame(score, myCafe.getOwnedCount(), myCafe.getCost(), myMine.getOwnedCount(), myMine.getCost(), myBank.getOwnedCount(), myBank.getCost());
+                    saveGame(score, shop);
                     window.close();
                 }
 
@@ -205,72 +167,67 @@ int main()
                     {
                         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-                        // Click Coin
+                        // Coin Clicked
                         if (myCoin.isClicked(mousePos))
                         {
                             score++;
                             myCoin.shrink();
                             coinSound.play();
-
-                            // Create Floating Text at mouse position
                             floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
                         }
 
-						// --- Building Purchase Logic ---
-                        for (auto& building : shop) {
-                            if (building->isClicked(mousePos)) {
+						// --- Building Click ---
+                        for (auto& building : shop) 
+                        {
+                            if (building->isClicked(mousePos)) 
+                            {
                                 building->shrink();
 
-                                if (score >= building->getCost()) {
-
-                                    // Capture cost
+                                if (score >= building->getCost()) 
+                                {
                                     long long cost = building->getCost();
-
-                                    // Pay & Buy
                                     score -= cost;
                                     building->purchase();
                                     purchaseSound.play();
 
-                                    // Floating Text
-                                    std::string costString = "=" + std::to_string(cost);
+                                    std::string costString = "-" + std::to_string(cost);
                                     floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
                                 }
-                                else {
+                                else 
+                                {
                                     std::cout << "Not enough coins for " << building->getClassName() << "!" << std::endl;
                                 }                           
                             }
 						}                       
                     }
                 }
-                        // Mouse Released
-                        if (event.type == sf::Event::MouseButtonReleased)
-                        {
-                            myCoin.resetScale();
-                            
-                            for (const auto& building : shop) {
-                                building->resetScale();
-                            }                                                
-                        }                         
+                        
+                if (event.type == sf::Event::MouseButtonReleased)
+                {
+                    myCoin.resetScale();                           
+                    for (const auto& building : shop) 
+                    {
+                        building->resetScale();
+                    }                                                
+                }                         
             }
 
-        // --- Update UI Text ---
+        // --- UPDATE TEXTS ---
         scoreText.setString("Coins: " + std::to_string(score));
+        incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
 
-		incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
+        // Update the label for each building in the loop
+        for (size_t i = 0; i < shop.size(); i++) {
+            std::string s = shop[i]->getClassName() + 
+                            "\nOwned: " + std::to_string(shop[i]->getOwnedCount()) + 
+                            "\nCost: " + std::to_string(shop[i]->getCost());
+            shopLabels[i].setString(s);
+        }
 
-        std::string cafeString = "Cafe (Owned: " + std::to_string(myCafe.getOwnedCount()) + ")\nCost: " + std::to_string(myCafe.getCost());
-        cafeText.setString(cafeString);
-
-		std::string mineString = "Mine (Owned: " + std::to_string(myMine.getOwnedCount()) + ")\nCost: " + std::to_string(myMine.getCost());
-		mineText.setString(mineString);
-
-		std::string bankString = "Bank (Owned: " + std::to_string(myBank.getOwnedCount()) + ")\nCost: " + std::to_string(myBank.getCost());
-		bankText.setString(bankString);
-
-        // --- Render ---
+        // --- RENDER ---
         window.clear(sf::Color::White);
 
-        // Draw the buildings
+        // Draw Buildings
         for (auto& building : shop) {
             building->draw(window);
         }
@@ -278,18 +235,18 @@ int main()
         window.draw(titleText);
         window.draw(scoreText);
 		window.draw(incomeText);
-		window.draw(cafeText);
-		window.draw(mineText);
-		window.draw(bankText);
 
-        // Draw the floating texts
-        for (auto& txt : floatingTexts)
-        {
+        for (auto& label : shopLabels) {
+            window.draw(label);
+        }
+
+        myCoin.draw(window);
+
+        for (auto& txt : floatingTexts) {
             txt.draw(window);
         }
 
         window.display();
     }
-
     return 0;
 }
