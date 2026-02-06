@@ -87,38 +87,12 @@ int main()
         t.setPosition(shop[i]->getSpritePosition().x - 50, 490.f + 60.f);
         shopLabels.push_back(t);
     }
-    // To DO: add 'sf::Vector2f getSpritePosition()' to Building.h 
-   // shopLabels[0].setPosition(50.f, 550.f);  // Cafe
-   // shopLabels[1].setPosition(250.f, 550.f); // Mine
-    //shopLabels[2].setPosition(450.f, 550.f); // Bank
 
     std::vector<FloatingText> floatingTexts;
     sf::Clock passiveIncomeClock;
     sf::Clock frameClock; // For floating text updates
     float timeAccumulator = 0.0f; // Stores time passed
     long long incomePerSecond = 0;
-
-
- //   // Cafe Info Text
- //   sf::Text cafeText;
- //   cafeText.setFont(font);
- //   cafeText.setCharacterSize(18);
- //   cafeText.setFillColor(sf::Color::Black);
- //   cafeText.setPosition(50.f, 550.f); // Below the cafe sprite
-
-	//// Mine Info Text
-	//sf::Text mineText;
-	//mineText.setFont(font);
-	//mineText.setCharacterSize(18);
-	//mineText.setFillColor(sf::Color::Black);
-	//mineText.setPosition(250.f, 550.f); // Below the mine sprite
-
-	//// Bank Info Text
-	//sf::Text bankText;
-	//bankText.setFont(font);
-	//bankText.setCharacterSize(18);
-	//bankText.setFillColor(sf::Color::Black);
-	//bankText.setPosition(450.f, 550.f); // Below the bank sprite
 
 
     // --- Game Loop ---
