@@ -3,92 +3,64 @@
 #include <iostream>
 #include <string>
 
-void saveGame(long long score, int cafesOwned, long long cafeCost, int minesOwned, long long mineCost, int banksOwned, long long bankCost)
+void saveGame(long long score, const std::vector<std::unique_ptr<Building>>& shop)
 {
-	// Open file for writing output
+    std::ofstream outFile("assets/data/save.txt", std::ios::trunc);
+    if (outFile.is_open())
+    {
+        outFile << "Score: " << score << std::endl;
 
-	std::ofstream outFile("assets/data/save.txt", std::ios::trunc);
+        // Loop through the vector and save every building
+        for (const auto& building : shop)
+        {
+            // Format: Name: Owned Cost
+            outFile << building->getClassName() << ": "
+                << building->getOwnedCount() << " "
+                << building->getCost() << std::endl;
+        }
 
-	if (outFile.is_open())
-	{
-		// Write the label and the score
-		outFile << "Coins: " << score << std::endl;
-		outFile << "Cafes: " << cafesOwned << std::endl;
-		outFile << "CafeCost: " << cafeCost << std::endl;
-		outFile << "Mines: " << minesOwned << std::endl;
-		outFile << "MineCost: " << mineCost << std::endl;
-		outFile << "Banks: " << banksOwned << std::endl;
-		outFile.close(); // Close when done
-
-		std::cout << "Game Saved: " << score << std::endl;
-		std::cout << "Cafes: " << cafesOwned << std::endl;
-		std::cout << "CafeCost: " << cafeCost << std::endl;
-		std::cout << "Mines: " << minesOwned << std::endl;
-		std::cout << "MineCost: " << mineCost << std::endl;
-		std::cout << "Banks: " << banksOwned << std::endl;
-		std::cout << "BankCost: " << bankCost << std::endl;
-	}
-	else
-	{
-		std::cout << "Errir: Could not save game!" << std::endl;
-	}
+        outFile.close();
+        std::cout << "Game Saved!" << std::endl;
+    }
 }
 
-void loadGame(long long& score, int& cafesOwned, long long& cafeCost, int& minesOwned, long long& mineCost, int& banksOwned, long long& bankCost)
+void loadGame(long long& score, std::vector<std::unique_ptr<Building>>& shop)
 {
-	// Open file for reading (input)
-	std::ifstream inFile("assets/data/save.txt");
-	std::string label; // A temporary bucket for the text "Coins:"
+    std::ifstream inFile("assets/data/save.txt");
+    std::string label;
 
-	// Reset variables
-	score = 0;
-	cafesOwned = 0;
-	cafeCost = 1000;
-	minesOwned = 0;
-	mineCost = 10000;
-	bankCost = 100000;
+    if (inFile.is_open())
+    {
+        while (inFile >> label)
+        {
+            if (label == "Score:")
+            {
+                inFile >> score;
+            }
+            else
+            {
+                // It must be a building
+                // 1. Remove the colon from the label (e.g., "Cafe:" -> "Cafe")
+                std::string buildingName = label.substr(0, label.size() - 1);
 
-	// Check if file exists
-	if (inFile.is_open())
-	{
-		// "while" loop keeps reading words until the file ends
-		while (inFile >> label)
-		{
-			if (label == "Coins:")
-			{
-				inFile >> score;
-			}
-			if (label == "Cafes:")
-			{
-				inFile >> cafesOwned;
-			}
-			if (label == "CafeCost:")
-			{
-				inFile >> cafeCost;
-			}
-			if (label == "Mines:")
-			{
-				inFile >> minesOwned;
-			}
-			if (label == "MineCost:")
-			{
-				inFile >> mineCost;
-			}
-			if (label == "Banks:")
-			{
-				inFile >> banksOwned;
-			}
-			else if (label == "BankCost:")
-			{
-				inFile >> bankCost;
-			}
-		}
+                // 2. Find the building in the shop list
+                for (auto& building : shop)
+                {
+                    if (building->getClassName() == buildingName)
+                    {
+                        int count;
+                        long long cost;
+                        // Read the next two numbers from the file
+                        inFile >> count >> cost;
 
-		inFile.close();
-		std::cout << "Game Loaded -> Score: " << score << ", Cafes: " << cafesOwned << ", Mines: " << minesOwned << ", Banks: " << banksOwned << std::endl;
-	}
-	else
-	{
-		std::cout << "No save file found. Starting new game." << std::endl;
-	}
+                        // Update the building
+                        building->setOwnedCount(count);
+                        building->setCost(cost);
+                    }
+                }
+            }
+        }
+        inFile.close();
+        std::cout << "Game Loaded!" << std::endl;
+    }
 }
