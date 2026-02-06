@@ -81,3 +81,8 @@ void Building::resetScale()
 std::string Building::getClassName() const {
 	return "Building";
 }
+
+sf::Vector2f Building::getSpritePosition() const
+{
+	return sprite.getPosition();
+}

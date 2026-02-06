@@ -15,7 +15,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	bool isClicked(sf::Vector2f mousePos);
 	virtual std::string getClassName() const;
-	sf::Vector2f getSpritePosition();
+	sf::Vector2f getSpritePosition() const;
 
 	// Shop Logic
 	void purchase();

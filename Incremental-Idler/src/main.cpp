@@ -14,7 +14,7 @@
 int main()
 {
     // Setup Window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Incremental Idler");
+    sf::RenderWindow window(sf::VideoMode(800, 700), "Incremental Idler");
     window.setFramerateLimit(60);
 
 
