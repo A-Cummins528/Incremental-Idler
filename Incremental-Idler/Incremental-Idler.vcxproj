@@ -27,6 +27,7 @@
     <ClCompile Include="src\Coin.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\SaveSystem.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bank.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="Mine.h" />
     <ClInclude Include="src\Coin.h" />
     <ClInclude Include="src\SaveSystem.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\arial.ttf" />
