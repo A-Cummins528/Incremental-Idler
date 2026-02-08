@@ -165,7 +165,7 @@ int main()
                                     building->purchase();
                                     purchaseSound.play();
 
-                                    std::string costString = "-" + std::to_string(cost);
+                                    std::string costString = "-" + Utils::formatNumber(cost);
                                     floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, costString, font, sf::Color::Red, 50.0f));
                                 }
                                 else 
