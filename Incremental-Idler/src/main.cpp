@@ -9,6 +9,7 @@
 #include "Bank.h"
 #include "SaveSystem.h"
 #include "FloatingText.h"
+#include "Utils.h"
 
 
 int main()
@@ -187,14 +188,14 @@ int main()
             }
 
         // --- UPDATE TEXTS ---
-        scoreText.setString("Coins: " + std::to_string(score));
-        incomeText.setString("Coins per second: " + std::to_string(incomePerSecond));
+        scoreText.setString("Coins: " + Utils::formatNumber(score));
+        incomeText.setString("Coins/s: " + Utils::formatNumber(incomePerSecond));
 
         // Update the label for each building in the loop
         for (size_t i = 0; i < shop.size(); i++) {
             std::string s = shop[i]->getClassName() + 
                             "\nOwned: " + std::to_string(shop[i]->getOwnedCount()) + 
-                            "\nCost: " + std::to_string(shop[i]->getCost());
+                            "\nCost: " + Utils::formatNumber(shop[i]->getCost());
             shopLabels[i].setString(s);
         }
 
