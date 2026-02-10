@@ -1,4 +1,4 @@
-Score: 4583
+Score: 35948
 Cafe: 2 1322
 Mine: 1 11500
 Bank: 1 115000

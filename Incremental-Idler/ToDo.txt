@@ -1,8 +1,17 @@
-Add Shop button
-Expand Building options (add manager, upgrades, etc)
-Create additional buildings (Mine, Factory, Bank, etc)
-Reassess balancing of costs and earnings
-Format large numbers
-Add background music
-Implement Unit Tests & Github Actions for CI/CD
-Incorporate Docker containerization for easier deployment
+Polish & Content
+- Add background music
+- Create additional building
+
+Game Logic & UI (State Management)
+- Reassess balancing (Economy)
+- Add Shop button
+- Settings menu (audio)
+
+Advanced Architecture
+- Expand Building Options (Upgrades)
+- Implement Managers (Automation)
+
+Deployment & Testing
+- Implement Unit Tests
+- Github Actions (CI/CD)
+- Docker containerization
