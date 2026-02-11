@@ -44,6 +44,11 @@ int main()
     purchaseSound.setBuffer(purchaseBuffer);
     purchaseSound.setVolume(50.f);
 
+    sf::Music bgMusic;
+	if (!bgMusic.openFromFile("assets/audio/background.ogg")) return -1;
+	bgMusic.setLoop(true);
+    bgMusic.setVolume(50.f);
+	bgMusic.play();
 
     // --- OBJECTS ---
     Coin myCoin(400.f, 300.f, coinTexture);
