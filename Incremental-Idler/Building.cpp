@@ -86,3 +86,8 @@ sf::Vector2f Building::getSpritePosition() const
 {
 	return sprite.getPosition();
 }
+
+int Building::getBaseIncome() const
+{
+	return baseIncome;
+}

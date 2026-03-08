@@ -204,9 +204,12 @@ int main()
 
         // Update the label for each building in the loop
         for (size_t i = 0; i < shop.size(); i++) {
-            std::string s = shop[i]->getClassName() + 
-                            "\nOwned: " + std::to_string(shop[i]->getOwnedCount()) + 
-                            "\nCost: " + Utils::formatNumber(shop[i]->getCost());
+            std::string s = shop[i]->getClassName() +
+                "\nCoins/s: " + Utils::formatNumber(shop[i]->getBaseIncome()) +
+                "\nOwned: " + std::to_string(shop[i]->getOwnedCount()) +
+                "\nCost: " + Utils::formatNumber(shop[i]->getCost());
+
+
             shopLabels[i].setString(s);
         }
 

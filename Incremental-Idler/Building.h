@@ -22,6 +22,7 @@ public:
 	long long getCost();
 	int getOwnedCount();
 	long long getIncomePerSecond();
+	int getBaseIncome() const;
 
 	// Load Logic
 	void setOwnedCount(int count);
