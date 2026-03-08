@@ -1,5 +1,5 @@
-Score: 8271652
-Cafe: 15 8121
-Mine: 8 30586
-Bank: 6 231305
-Factory: 13 6152776
+Score: 1884370
+Cafe: 27 43436
+Mine: 27 435243
+Bank: 9 351785
+Factory: 15 8137045

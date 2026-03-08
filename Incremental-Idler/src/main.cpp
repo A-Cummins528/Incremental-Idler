@@ -81,7 +81,7 @@ int main()
     bool isMuted = false;
 
     // Mute Button
-    Button muteButton(710.f, 50.f, textures["mute"]);
+    Button muteButton(710.f, 50.f, textures["audio"]);
 
     // --- LOAD GAME ---
     long long score = 0;
@@ -189,13 +189,13 @@ int main()
                                 bgMusic.setVolume(0.f);
                                 coinSound.setVolume(0.f);
                                 purchaseSound.setVolume(0.f);
-                                muteButton.setTexture(textures["audio"]);
+                                muteButton.setTexture(textures["mute"]);
                             }
                             else {
                                 bgMusic.setVolume(50.f);
                                 coinSound.setVolume(50.f);
                                 purchaseSound.setVolume(50.f);
-                                muteButton.setTexture(textures["mute"]);
+                                muteButton.setTexture(textures["audio"]);
                             }
 						}
 						// --- Building Click ---
