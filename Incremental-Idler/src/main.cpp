@@ -7,6 +7,7 @@
 #include "Cafe.h"
 #include "Mine.h"
 #include "Bank.h"
+#include "Factory.h"
 #include "SaveSystem.h"
 #include "FloatingText.h"
 #include "Utils.h"
@@ -27,10 +28,14 @@ int main()
     if (!coinTexture.loadFromFile("assets/images/coin.png")) return -1;
 
     // TO DO: load these directly into the vector creation
-    sf::Texture cafeTexture, mineTexture, bankTexture;
+	// TO DO: add error handling for missing assets (currently just exits)
+	// TO DO: Use a list of building types and loop through them 
+    // to load textures and create shop items, instead of hardcoding each one
+    sf::Texture cafeTexture, mineTexture, bankTexture, factoryTexture;
     if (!cafeTexture.loadFromFile("assets/images/cafe.png")) return -1;
     if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
     if (!bankTexture.loadFromFile("assets/images/bank.png")) return -1;
+	if (!factoryTexture.loadFromFile("assets/images/factory.png")) return -1;
 
 
 	// --- AUDIO ---
@@ -58,6 +63,7 @@ int main()
     shop.push_back(std::make_unique<Cafe>(110.f, 490.f, cafeTexture));
     shop.push_back(std::make_unique<Mine>(310.f, 490.f, mineTexture));
     shop.push_back(std::make_unique<Bank>(510.f, 490.f, bankTexture));
+	shop.push_back(std::make_unique<Factory>(710.f, 490.f, factoryTexture));
 
     // --- LOAD GAME ---
     long long score = 0;

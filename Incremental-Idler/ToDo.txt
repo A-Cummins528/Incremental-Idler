@@ -1,10 +1,10 @@
 Polish & Content
-- Create additional building
+- Tooltips on mouseover
 
 Game Logic & UI (State Management)
 - Reassess balancing (Economy)
 - Add Shop button
-- Settings menu (audio)
+- Settings menu (audio / mute)
 
 Advanced Architecture
 - Expand Building Options (Upgrades)
