@@ -1,5 +1,4 @@
 Polish & Content
-- Add background music
 - Create additional building
 
 Game Logic & UI (State Management)

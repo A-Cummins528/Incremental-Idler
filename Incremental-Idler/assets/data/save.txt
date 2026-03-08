@@ -1,4 +1,4 @@
-Score: 18031
-Cafe: 2 1322
-Mine: 1 11500
-Bank: 2 132250
+Score: 367099
+Cafe: 13 6141
+Mine: 3 15208
+Bank: 4 174900

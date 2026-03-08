@@ -22,6 +22,7 @@
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Cafe.cpp" />
+    <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FloatingText.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="src\Coin.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="Bank.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Cafe.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="FloatingText.h" />
     <ClInclude Include="Mine.h" />
     <ClInclude Include="src\Coin.h" />
