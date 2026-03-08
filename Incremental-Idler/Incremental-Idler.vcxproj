@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cafe.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FloatingText.cpp" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <ClInclude Include="Bank.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Cafe.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FloatingText.h" />

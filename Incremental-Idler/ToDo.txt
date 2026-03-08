@@ -4,7 +4,6 @@ Polish & Content
 Game Logic & UI (State Management)
 - Reassess balancing (Economy)
 - Add Shop button
-- Settings menu (audio / mute)
 
 Advanced Architecture
 - Expand Building Options (Upgrades)

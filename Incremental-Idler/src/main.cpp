@@ -11,6 +11,7 @@
 #include "SaveSystem.h"
 #include "FloatingText.h"
 #include "Utils.h"
+#include "Button.h"
 
 
 int main()
@@ -31,11 +32,13 @@ int main()
 	// TO DO: add error handling for missing assets (currently just exits)
 	// TO DO: Use a list of building types and loop through them 
     // to load textures and create shop items, instead of hardcoding each one
-    sf::Texture cafeTexture, mineTexture, bankTexture, factoryTexture;
+    sf::Texture cafeTexture, mineTexture, bankTexture, factoryTexture, muteTexture, audioTexture;
     if (!cafeTexture.loadFromFile("assets/images/cafe.png")) return -1;
     if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
     if (!bankTexture.loadFromFile("assets/images/bank.png")) return -1;
 	if (!factoryTexture.loadFromFile("assets/images/factory.png")) return -1;
+	if (!muteTexture.loadFromFile("assets/images/mute.png")) return -1;
+	if (!audioTexture.loadFromFile("assets/images/audio.png")) return -1;
 
 
 	// --- AUDIO ---
@@ -57,6 +60,10 @@ int main()
 
     // --- OBJECTS ---
     Coin myCoin(400.f, 300.f, coinTexture);
+
+	Button muteButton(710.f, 50.f, muteTexture);
+    // State tracker
+	bool isMuted = false;
 
     // The Shop List
     std::vector<std::unique_ptr<Building>> shop;
@@ -162,6 +169,24 @@ int main()
                             floatingTexts.push_back(FloatingText(mousePos.x, mousePos.y, "+1", font));
                         }
 
+						// Mute Button Clicked
+                        if (muteButton.isClicked(mousePos))
+                        {
+                            isMuted = !isMuted; // Toggle state
+                            if (isMuted) 
+                            {
+                                bgMusic.setVolume(0.f);
+                                coinSound.setVolume(0.f);
+                                purchaseSound.setVolume(0.f);
+                                muteButton.setTexture(audioTexture);
+                            }
+                            else {
+                                bgMusic.setVolume(50.f);
+                                coinSound.setVolume(50.f);
+                                purchaseSound.setVolume(50.f);
+                                muteButton.setTexture(muteTexture);
+                            }
+						}
 						// --- Building Click ---
                         for (auto& building : shop) 
                         {
@@ -224,6 +249,7 @@ int main()
         window.draw(titleText);
         window.draw(scoreText);
 		window.draw(incomeText);
+		muteButton.draw(window);
 
         for (auto& label : shopLabels) {
             window.draw(label);
