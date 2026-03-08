@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <string>
+#include <map>
 #include "Coin.h"
 #include "Cafe.h"
 #include "Mine.h"
@@ -25,20 +27,27 @@ int main()
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/arial.ttf")) return -1;
 
-    sf::Texture coinTexture;
-    if (!coinTexture.loadFromFile("assets/images/coin.png")) return -1;
+	// Define a list of all texture names and paths to simplify loading and error handling
+	std::vector<std::string> textureNames = { 
+        "coin", "cafe", "mine", "bank", "factory", "mute", "audio" 
+    };
 
-    // TO DO: load these directly into the vector creation
-	// TO DO: add error handling for missing assets (currently just exits)
-	// TO DO: Use a list of building types and loop through them 
-    // to load textures and create shop items, instead of hardcoding each one
-    sf::Texture cafeTexture, mineTexture, bankTexture, factoryTexture, muteTexture, audioTexture;
-    if (!cafeTexture.loadFromFile("assets/images/cafe.png")) return -1;
-    if (!mineTexture.loadFromFile("assets/images/mine.png")) return -1;
-    if (!bankTexture.loadFromFile("assets/images/bank.png")) return -1;
-	if (!factoryTexture.loadFromFile("assets/images/factory.png")) return -1;
-	if (!muteTexture.loadFromFile("assets/images/mute.png")) return -1;
-	if (!audioTexture.loadFromFile("assets/images/audio.png")) return -1;
+	// Create the map to hold textures
+	std::map<std::string, sf::Texture> textures;
+
+	// Loop through the list and load them dynamically
+	for (const auto& name : textureNames) 
+    {
+		std::string filepath = "assets/images/" + name + ".png";
+
+        // textures[name] automatically creates the sf::Texture object in the map
+        if (!textures[name].loadFromFile(filepath))
+        {
+            // Error handling: print the specific missing file to the console
+            std::cerr << "CRITICAL ERROR: Failed to load " << filepath << std::endl;
+            return -1; // Exit safely
+        }
+    }
 
 
 	// --- AUDIO ---
@@ -58,19 +67,21 @@ int main()
     bgMusic.setVolume(50.f);
 	bgMusic.play();
 
-    // --- OBJECTS ---
-    Coin myCoin(400.f, 300.f, coinTexture);
 
-	Button muteButton(710.f, 50.f, muteTexture);
-    // State tracker
-	bool isMuted = false;
+    // --- OBJECTS ---
+    Coin myCoin(400.f, 300.f, textures["coin"]);   
 
     // The Shop List
     std::vector<std::unique_ptr<Building>> shop;
-    shop.push_back(std::make_unique<Cafe>(110.f, 490.f, cafeTexture));
-    shop.push_back(std::make_unique<Mine>(310.f, 490.f, mineTexture));
-    shop.push_back(std::make_unique<Bank>(510.f, 490.f, bankTexture));
-	shop.push_back(std::make_unique<Factory>(710.f, 490.f, factoryTexture));
+    shop.push_back(std::make_unique<Cafe>(110.f, 490.f, textures["cafe"]));
+    shop.push_back(std::make_unique<Mine>(310.f, 490.f, textures["mine"]));
+    shop.push_back(std::make_unique<Bank>(510.f, 490.f, textures["bank"]));
+    shop.push_back(std::make_unique<Factory>(710.f, 490.f, textures["factory"]));
+    // State tracker
+    bool isMuted = false;
+
+    // Mute Button
+    Button muteButton(710.f, 50.f, textures["mute"]);
 
     // --- LOAD GAME ---
     long long score = 0;
@@ -178,13 +189,13 @@ int main()
                                 bgMusic.setVolume(0.f);
                                 coinSound.setVolume(0.f);
                                 purchaseSound.setVolume(0.f);
-                                muteButton.setTexture(audioTexture);
+                                muteButton.setTexture(textures["audio"]);
                             }
                             else {
                                 bgMusic.setVolume(50.f);
                                 coinSound.setVolume(50.f);
                                 purchaseSound.setVolume(50.f);
-                                muteButton.setTexture(muteTexture);
+                                muteButton.setTexture(textures["mute"]);
                             }
 						}
 						// --- Building Click ---
